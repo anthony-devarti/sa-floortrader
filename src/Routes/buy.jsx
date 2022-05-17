@@ -7,7 +7,6 @@ export default function Buy(){
         <div className="buy">
         <h1>Buy</h1>
         <Search />
-        <Visualizer />
         <Cart />
         </div>
     )

@@ -1,6 +1,8 @@
 import { Col, Row } from "react-bootstrap"
 
-export default function Visualizer(){
+export default function Visualizer(currentCard){
+    console.log(currentCard)
+
     return(
         <div className="visualizer">
             <Col className="cell">
@@ -8,7 +10,7 @@ export default function Visualizer(){
                     <h2>Card Image</h2>
                 </Row>
                 <Row>
-                    <p>This is where the image will go.</p>
+                    <p>Image goes here.</p>
                 </Row>
             </Col>
             <Col className="cell">
@@ -16,7 +18,7 @@ export default function Visualizer(){
                     <h2>Oracle Text</h2>
                 </Row>
                 <Row>
-                    <p>This is where the text will go.</p>
+                    <p>{currentCard.currentCard.text}</p>
                 </Row>
             </Col>
             <Col className="cell">
@@ -24,7 +26,7 @@ export default function Visualizer(){
                     <h2>Price</h2>
                 </Row>
                 <Row>
-                    <p>This is where the card price goes.</p>
+                    <p>Regular: ${currentCard.currentCard.price}</p>
                 </Row>
             </Col>
         </div>

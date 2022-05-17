@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Form, FormControl, Button } from "react-bootstrap"
+import Visualizer from "./Visualizer";
 
 export default function Search() {
 
@@ -57,6 +58,7 @@ export default function Search() {
                     <Button variant="outline-success" onClick={(e) => handleSearch(e)}>Search</Button>
                 </Form>
             </div>
+            <Visualizer currentCard={currentCard}/>
         </>
     )
 }
