@@ -2,6 +2,8 @@ import { Button, Table } from "react-bootstrap"
 
 export default function Cart() {
     return (
+        <>
+        <h1>Current Offer</h1>
         <Table striped bordered hover>
             <thead>
                 <tr>
@@ -36,5 +38,6 @@ export default function Cart() {
                 </tr>
             </tbody>
         </Table>
+        </>
     )
 }

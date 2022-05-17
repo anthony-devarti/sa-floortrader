@@ -37,8 +37,9 @@ export default function Search() {
                     foilPrice: card.prices.usd_foil,
                     text: card.oracle_text,
                     tcgId: card.prints_search_uri,
-                    set: card.set_uri,
+                    set: card.set_name,
                 }
+                console.group(card)
                 localStorage.setItem("card", JSON.stringify(result))
                 setCurrentCard(result)
             });

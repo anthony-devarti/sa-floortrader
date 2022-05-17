@@ -22,9 +22,21 @@
 .cell-header{
   border-bottom: 3px solid black;
   text-align: center;
+  justify-content: center;
+  align-content: center;
 }
 
 .subheader{
   display: flex;
   flex-direction: column;
+}
+
+.buy-form{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.image-cell {
+  justify-content: center;
 }
