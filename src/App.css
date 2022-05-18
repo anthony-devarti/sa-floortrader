@@ -6,7 +6,7 @@
 }
 
 .search-bar {
-  margin: 3rem;
+  margin: 1rem;
 }
 
 .buy{
@@ -39,4 +39,10 @@
 
 .image-cell {
   justify-content: center;
+}
+
+.narrow-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
