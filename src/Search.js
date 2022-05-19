@@ -36,12 +36,15 @@ export default function Search() {
         setCondition(event.target.value);
     };
 
+    //determines what card is being searched
+    const [ searchValue, setSearchValue ] = useState("animar so ul of elements")
+
     
     function handleSearch(e) {
         e.preventDefault()
         scryfall
         .get("cards/named", {
-            fuzzy: "animar soul",
+            fuzzy: searchValue,
         })
         .then(function (card) {
                 card.getPrice(); // '11.25'
@@ -56,11 +59,13 @@ export default function Search() {
                     text: card.oracle_text,
                     tcgId: card.prints_search_uri,
                     set: card.set_name,
+                    //this might not be right but I'm leaving it here as a reminder
+                    versions: card.prints_search_uri
                 }
                 // console.group(card)
                 localStorage.setItem("card", JSON.stringify(result))
                 setCurrentCard(result)
-                // console.log(card)
+                console.log(card)
             });
         }
         
@@ -71,7 +76,7 @@ export default function Search() {
                     Foiling
                     <select foil={foil} onChange={handleFoilChange}>
                         {options.map((option) => (
-                            <option value={option.value}>{option.label}</option>
+                            <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
                     </select>
                 </label>
@@ -91,6 +96,7 @@ export default function Search() {
                         placeholder="Search"
                         className="me-2"
                         aria-label="Search"
+                        onChange={(e) => setSearchValue(e.target.value)}
                     />
                     <Button variant="outline-success" onClick={(e) => handleSearch(e)}>Search</Button>
                 </Form>

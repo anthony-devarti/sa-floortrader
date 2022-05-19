@@ -1,11 +1,32 @@
-import { Col, Row, Button, Form } from "react-bootstrap"
+import { Col, Row, Button, Form, Modal } from "react-bootstrap"
 import { useState } from "react"
 
 export default function Visualizer(currentCard) {
-    console.log(currentCard.currentCard)
+    // console.log(currentCard.currentCard)
 
-    //handles the current offer
-    const [offer, setOffer] = useState(0)
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    function VersionModal() {
+
+
+        return (
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
 
 
     return (
@@ -22,7 +43,7 @@ export default function Visualizer(currentCard) {
                 <Row className="cell-header">
                     <h2>Oracle Text</h2>
                 </Row>
-                <Row>
+                <Row className="overflow-scroll">
                     <p>{currentCard.currentCard.text}</p>
                 </Row>
                 <Row className="cell-header">
@@ -32,7 +53,11 @@ export default function Visualizer(currentCard) {
                     <p>{currentCard.currentCard.set}</p>
                 </Row>
                 <Row style={{ justifyContent: "center" }}>
-                    <Button variant="primary" style={{ width: "fit-content" }}>Other Versions</Button>
+                    <Button 
+                    variant="primary" 
+                    onClick={handleShow}
+                    style={{ width: "fit-content" }}>Other Versions</Button>
+                    <VersionModal />
                 </Row>
             </Col>
             <Col className="cell">

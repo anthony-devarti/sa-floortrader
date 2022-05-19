@@ -46,3 +46,8 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+.overflow-scroll{
+  overflow: scroll;
+  max-height: 20vh;
+}
