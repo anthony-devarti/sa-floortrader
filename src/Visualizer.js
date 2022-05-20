@@ -1,21 +1,38 @@
 import { Col, Row, Button, Form, Modal } from "react-bootstrap"
 import { useState } from "react"
+import { useGlobalState } from "./GlobalState";
+import { printings } from "./data";
 
 export default function Visualizer(currentCard) {
-    // console.log(currentCard.currentCard)
+
+    const [state, dispatch] = useGlobalState()
+
+    let card = state.card
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+
     function VersionModal() {
+
+        //get all of the printings from the api
+
+        //this is not logging
+        console.log("card when modal is rendering",state.card.name)
+
+        //this is hitting the api whenever the search value state is updating
+        //that's bad
+        const otherPrintings = printings(state.card.name)
+        console.log(otherPrintings)
 
 
         return (
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Other Sets</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Body></Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
@@ -28,7 +45,6 @@ export default function Visualizer(currentCard) {
         );
     }
 
-
     return (
         <div className="visualizer">
             <Col className="cell">
@@ -36,7 +52,7 @@ export default function Visualizer(currentCard) {
                     <h2>Card Image</h2>
                 </Row>
                 <Row className="image-cell">
-                    <img src={currentCard.currentCard.img} style={{ height: "32vh", width: "auto" }}></img>
+                    <img src={card.img} style={{ height: "32vh", width: "auto" }}></img>
                 </Row>
             </Col>
             <Col className="cell">
@@ -44,19 +60,19 @@ export default function Visualizer(currentCard) {
                     <h2>Oracle Text</h2>
                 </Row>
                 <Row className="overflow-scroll">
-                    <p>{currentCard.currentCard.text}</p>
+                    <p>{card.text}</p>
                 </Row>
                 <Row className="cell-header">
                     <h2>Set</h2>
                 </Row>
                 <Row>
-                    <p>{currentCard.currentCard.set}</p>
+                    <p>{card.set}</p>
                 </Row>
                 <Row style={{ justifyContent: "center" }}>
-                    <Button 
-                    variant="primary" 
-                    onClick={handleShow}
-                    style={{ width: "fit-content" }}>Other Versions</Button>
+                    <Button
+                        variant="primary"
+                        onClick={handleShow}
+                        style={{ width: "fit-content" }}>Other Versions</Button>
                     <VersionModal />
                 </Row>
             </Col>
@@ -65,7 +81,7 @@ export default function Visualizer(currentCard) {
                     <h2>Price</h2>
                 </Row>
                 <Row>
-                    Suggested Offer: $ {currentCard.currentCard.price}
+                    Suggested Offer: $ {card.price}
                 </Row>
                 <Row>
                     <Form className="buy-form">

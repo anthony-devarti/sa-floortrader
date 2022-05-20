@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Form, FormControl, Button, Row } from "react-bootstrap"
+import { useGlobalState } from "./GlobalState";
 import Visualizer from "./Visualizer";
 
 export default function Search() {
+
+    const [ state, dispatch ] = useGlobalState()
 
     var scryfall = require("scryfall-client");
 
@@ -58,14 +61,14 @@ export default function Search() {
                     foilPrice: card.prices.usd_foil * condition,
                     text: card.oracle_text,
                     tcgId: card.prints_search_uri,
-                    set: card.set_name,
+                    set: card.set,
                     //this might not be right but I'm leaving it here as a reminder
                     versions: card.prints_search_uri
                 }
                 // console.group(card)
                 localStorage.setItem("card", JSON.stringify(result))
-                setCurrentCard(result)
-                console.log(card)
+                dispatch(state.card={...result})
+                console.log("card fetched by scryfall", state.card)
             });
         }
         
