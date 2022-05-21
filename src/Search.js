@@ -11,6 +11,8 @@ export default function Search() {
     var scryfall = require("scryfall-client");
 
     const [currentCard, setCurrentCard] = useState({})
+    const [printings, setPrintings] = useState({})
+    console.log( typeof printings)
 
     //handles offer state
     const [offer, setOffer] = useState(0)
@@ -24,7 +26,7 @@ export default function Search() {
     const [foil, setFoil] = useState("non")
 
     const handleFoilChange = (event) => {
-        setFoil(event.target.value);
+        dispatch(state.foil=event.target.value);
     };
 
     //condition state
@@ -40,7 +42,7 @@ export default function Search() {
 
     //changes the condition state object based on the dropdown
     const handleConditionChange = (event) => {
-        setCondition(event.target.value);
+        dispatch(state.condition=event.target.value);
     };
 
     //determines what card is being searched
@@ -57,19 +59,6 @@ export default function Search() {
                 card.getPrice(); // '11.25'
                 card.getPrice("usd"); // '11.25'
                 card.getPrice("usd_foil"); // '52.51'
-                console.log(condition)
-                // let result = {
-                //     name: card.name,
-                //     img: card.image_uris.normal,
-                //     price: Math.floor((card.prices.usd * condition)*100)/100,
-                //     foilPrice: card.prices.usd_foil * condition,
-                //     text: card.oracle_text,
-                //     tcgId: card.prints_search_uri,
-                //     set: card.set,
-                //     //this might not be right but I'm leaving it here as a reminder
-                //     versions: card.prints_search_uri
-                // }
-                // console.group(card)
                 localStorage.setItem("card", JSON.stringify(card))
                 dispatch(state.card={...card})
                 setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, foil, condition))
@@ -77,6 +66,8 @@ export default function Search() {
                 console.log("card fetched by scryfall", state.card)
             });
         }
+
+    
         
         return (
             <>

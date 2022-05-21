@@ -59,17 +59,8 @@
 }
 
 .selector{
+  display: flex;
+  flex-direction: column;
   margin: 1rem;
-
-}
-
-.selector:hover {
-  vertical-align: center;
-  -moz-transform: scale(2);
-  -webkit-transform: scale(2);
-  -o-transform: scale(2);
-  z-index: 10;
-  display: block;
-  visibility: visible;
-  
+  justify-content: space-between;
 }

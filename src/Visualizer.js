@@ -1,7 +1,7 @@
-import { Col, Row, Button, Form, Modal } from "react-bootstrap"
-import { useState } from "react"
+import { Col, Row, Button, Form, Modal } from "react-bootstrap";
+import { useState } from "react";
 import { useGlobalState } from "./GlobalState";
-import { getPrintings, printings } from "./data";
+import { offerPrice } from "./data";
 
 export default function Visualizer(offer) {
 
@@ -9,13 +9,16 @@ export default function Visualizer(offer) {
 
     let card = state.card
     //for whatever reason, card.image_uris works, but when I go one deeper to normal, it can't be read
-    //console.log("card when it reaches visualizer: ", card.image_uris)
+    //console.log("card image when it reaches visualizer: ", card.image_uris)
 
     //console.log("offer: ", offer.offer)
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [selection, setSelection] = useState();
+
+    let currentOffer = offerPrice(card.prices.usd, card.prices.usd_foil, state.foil, state.condition)
 
 
     const [printings, setPrintings] = useState([])
@@ -43,7 +46,14 @@ export default function Visualizer(offer) {
     }
     // console.log(printings)
 
+
+    //there's a good chance that choosing versions should be a part of the search feature, for workflow reaswons
     function VersionModal() {
+
+       function select(card){
+           console.log(card)
+           setSelection(card)
+       }
 
 
 
@@ -54,8 +64,20 @@ export default function Visualizer(offer) {
                 </Modal.Header>
                 <Modal.Body className="over-x">
                     {printings.map((printing) => (
-                    <div key={printing.id} className="selector">
+                    <div 
+                    key={printing.id} 
+                    id={printing.set_name} 
+                    className="selector"
+                    >
+                        <h4>{printing.set_name}</h4>
                         <img src={printing.image_uris.small}></img>
+                        <Button 
+                        variant="primary"
+                        //the goal here is to get the button to highlight the card, then for the visualizer
+                        //to rerender whenever the save button is clicked so the new printing can update.
+                        //may make sense to change this workflow to selecting the printing before this.
+                        onClick={(e) => dispatch(state.card={...printing})}
+                        >Choose Printing</Button>
                     </div>    
                     ))}
                 </Modal.Body>
@@ -63,11 +85,8 @@ export default function Visualizer(offer) {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
         );
     }
 
@@ -78,7 +97,12 @@ export default function Visualizer(offer) {
                     <h2>Card Image</h2>
                 </Row>
                 <Row className="image-cell">
-                    <img src={state.card.image_uris} style={{ height: "32vh", width: "auto" }}></img>
+                    <img
+                        src={card.image_uris.normal}
+                        style={{ height: "32vh", width: "auto" }}
+                        alt={card.name}
+                    >
+                    </img>
                 </Row>
             </Col>
             <Col className="cell">
@@ -107,7 +131,8 @@ export default function Visualizer(offer) {
                     <h2>Price</h2>
                 </Row>
                 <Row>
-                    Suggested Offer: {offer.offer}
+                    {/* put the current offer here.  This should update whenever the app renders */}
+                    Suggested Offer: {currentOffer}
                 </Row>
                 <Row>
                     <Form className="buy-form">
