@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import Body from './Body';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [view, setView] = useState(1)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Navbar bg="dark" variant="dark">
+            <Container>
+                <Navbar.Brand href="/buy">Strange Aeons</Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link onClick={() => setView(1)}>Buy</Nav.Link> | {" "}
+                    <Nav.Link onClick={() => setView(2)}>History</Nav.Link> | {" "}
+                    <Nav.Link onClick={() => setView(3)}>Settings</Nav.Link>
+                    <Nav.Link onClick={() => setView(4)}>Profile</Nav.Link>
+                </Nav>
+            </Container>
+        </Navbar>
+    <Body view={view}/>
+    </>
   );
 }
 
