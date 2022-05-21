@@ -1,4 +1,4 @@
-.visualizer{
+.visualizer {
   display: flex;
   flex-direction: row;
   margin: 3rem;
@@ -9,29 +9,29 @@
   margin: 1rem;
 }
 
-.buy{
+.buy {
   height: 90vh;
   justify-content: space-between;
   align-content: space-between;
 }
 
-.cell{
-  border: 5px solid black
+.cell {
+  border: 5px solid black;
 }
 
-.cell-header{
+.cell-header {
   border-bottom: 3px solid black;
   text-align: center;
   justify-content: center;
   align-content: center;
 }
 
-.subheader{
+.subheader {
   display: flex;
   flex-direction: column;
 }
 
-.buy-form{
+.buy-form {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,13 +41,35 @@
   justify-content: center;
 }
 
-.narrow-row{
+.narrow-row {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.overflow-scroll{
+.overflow-scroll {
   overflow: scroll;
   max-height: 20vh;
+}
+
+.over-x {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+
+.selector{
+  margin: 1rem;
+
+}
+
+.selector:hover {
+  vertical-align: center;
+  -moz-transform: scale(2);
+  -webkit-transform: scale(2);
+  -o-transform: scale(2);
+  z-index: 10;
+  display: block;
+  visibility: visible;
+  
 }

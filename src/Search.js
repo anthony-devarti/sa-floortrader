@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Form, FormControl, Button, Row } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import Visualizer from "./Visualizer";
+import { offerPrice } from "./data";
 
 export default function Search() {
 
@@ -10,6 +11,9 @@ export default function Search() {
     var scryfall = require("scryfall-client");
 
     const [currentCard, setCurrentCard] = useState({})
+
+    //handles offer state
+    const [offer, setOffer] = useState(0)
 
     //foil state
     const options = [
@@ -40,7 +44,7 @@ export default function Search() {
     };
 
     //determines what card is being searched
-    const [ searchValue, setSearchValue ] = useState("animar so ul of elements")
+    const [ searchValue, setSearchValue ] = useState("animar soul of elements")
 
     
     function handleSearch(e) {
@@ -54,20 +58,22 @@ export default function Search() {
                 card.getPrice("usd"); // '11.25'
                 card.getPrice("usd_foil"); // '52.51'
                 console.log(condition)
-                let result = {
-                    name: card.name,
-                    img: card.image_uris.normal,
-                    price: Math.floor((card.prices.usd * condition)*100)/100,
-                    foilPrice: card.prices.usd_foil * condition,
-                    text: card.oracle_text,
-                    tcgId: card.prints_search_uri,
-                    set: card.set,
-                    //this might not be right but I'm leaving it here as a reminder
-                    versions: card.prints_search_uri
-                }
+                // let result = {
+                //     name: card.name,
+                //     img: card.image_uris.normal,
+                //     price: Math.floor((card.prices.usd * condition)*100)/100,
+                //     foilPrice: card.prices.usd_foil * condition,
+                //     text: card.oracle_text,
+                //     tcgId: card.prints_search_uri,
+                //     set: card.set,
+                //     //this might not be right but I'm leaving it here as a reminder
+                //     versions: card.prints_search_uri
+                // }
                 // console.group(card)
-                localStorage.setItem("card", JSON.stringify(result))
-                dispatch(state.card={...result})
+                localStorage.setItem("card", JSON.stringify(card))
+                dispatch(state.card={...card})
+                setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, foil, condition))
+                // console.log("image", card.image_uris.normal)
                 console.log("card fetched by scryfall", state.card)
             });
         }
@@ -96,15 +102,15 @@ export default function Search() {
                 <Form className="d-flex" onSubmit={(e) => handleSearch(e)}>
                     <FormControl
                         type="search"
-                        placeholder="Search"
+                        placeholder="Enter a Card Name"
                         className="me-2"
                         aria-label="Search"
                         onChange={(e) => setSearchValue(e.target.value)}
                     />
-                    <Button variant="outline-success" onClick={(e) => handleSearch(e)}>Search</Button>
+                    <Button variant="outline-success" onClick={(e) => handleSearch(e)}>Go</Button>
                 </Form>
             </div>
-            <Visualizer currentCard={currentCard} />
+            <Visualizer offer={offer} />
         </>
     )
 }
