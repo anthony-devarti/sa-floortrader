@@ -19,7 +19,7 @@ export default function Visualizer(offer) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let suggested = offerPrice(card.prices.usd, card.prices.usd_foil, state.foil, state.condition)
+    let suggested = offerPrice(state.card.prices.usd, state.card.prices.usd_foil, state.foilStatus, state.condition)
 
 
     const [printings, setPrintings] = useState([])
@@ -71,10 +71,8 @@ export default function Visualizer(offer) {
                             </img>
                             <Button
                                 variant="primary"
-                                //the goal here is to get the button to highlight the card, then for the visualizer
-                                //to rerender whenever the save button is clicked so the new printing can update.
-                                //may make sense to change this workflow to selecting the printing before this.
-                                onClick={(e) => dispatch(state.card = { ...printing })}
+                                //this is adding global state keys for each key in the printing, rather than just replacing the value of the card key
+                                onClick={(e) => dispatch(state.card={...printing})}
                             >Choose Printing</Button>
                         </div>
                     ))}

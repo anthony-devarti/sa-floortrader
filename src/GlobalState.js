@@ -179,7 +179,7 @@ const initialState = {
   currentUser: user ? jwtDecode(user.access) : null,
   currentUserToken: user ? user.access : null,
   card: {...animar},
-  foil: "non",
+  foilStatus: 1,
   condition: 1
 }
 

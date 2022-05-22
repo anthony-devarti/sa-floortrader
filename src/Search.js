@@ -15,15 +15,17 @@ export default function Search() {
 
     //foil state
     const options = [
-        { label: 'Non-Foil', value: 'non' },
-        { label: 'Foil', value: 'foil' },
+        { label: 'Non-Foil', value: 1 },
+        { label: 'Foil', value: 2 },
+        { label: "Etched", value: 3 }
     ];
 
-    const [foil, setFoil] = useState("non")
+    // const [foilStatus, setFoilStatus] = useState("nonf")
 
     const handleFoilChange = (event) => {
-        setFoil(event.target.value)
-        dispatch(state.foil=event.target.value);
+        let status = event.target.value
+        // setFoilStatus("foil status: ", status)
+        dispatch(state.foilStatus=event.target.value);
     };
 
     //condition state
@@ -58,8 +60,9 @@ export default function Search() {
                 card.getPrice("usd"); // '11.25'
                 card.getPrice("usd_foil"); // '52.51'
                 localStorage.setItem("card", JSON.stringify(card))
-                dispatch(state.card={...card})
-                setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, foil, condition))
+                //card variable is all of the key values pairs, so wrapping it up like this allows it to replace the previous card object in global state, rather than adding 100 new keys into gs
+                dispatch(state.card={card})
+                setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, state.foilStatus, condition))
                 // console.log("image", card.image_uris.normal)
                 console.log("card fetched by scryfall", state.card)
             });
@@ -72,7 +75,7 @@ export default function Search() {
             <div className="narrow-row">
                 <label>
                     Foiling
-                    <select foil={foil} onChange={handleFoilChange}>
+                    <select value={state.foilStatus} onChange={handleFoilChange}>
                         {options.map((option) => (
                             <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
