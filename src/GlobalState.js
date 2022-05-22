@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, useEffect, useState } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 import jwtDecode from 'jwt-decode'
 
 //checks local storage for items in the cart and sets the starting cart value accordingly if it's there.  If it's null, it will set the starting cart value to an empty array.

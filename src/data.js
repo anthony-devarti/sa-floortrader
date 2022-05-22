@@ -1,3 +1,6 @@
+
+
+
 export async function printings(cardName) {
     var scryfall = require("scryfall-client");
     scryfall
@@ -47,4 +50,17 @@ export function offerPrice(price, foilPrice, foil, condition) {
     if (offer < .1) {
         return "Bulk"
     } else return "$" + offer
+}
+
+export function addToCart(card, suggested, offer, condition){
+    //define everything that needs to be included in the total order information
+    //this may need to take place inside of a component.
+    let lineItem = {
+        name: card.name,
+        Estimate: suggested,
+        Actual: offer,
+        condition: condition,
+    }
+    
+
 }

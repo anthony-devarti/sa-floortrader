@@ -12,13 +12,14 @@ export default function Visualizer(offer) {
     //console.log("card image when it reaches visualizer: ", card.image_uris)
 
     //console.log("offer: ", offer.offer)
+    const [offerField, setOfferField] = useState()
 
+    //modal behavior
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [selection, setSelection] = useState();
 
-    let currentOffer = offerPrice(card.prices.usd, card.prices.usd_foil, state.foil, state.condition)
+    let suggested = offerPrice(card.prices.usd, card.prices.usd_foil, state.foil, state.condition)
 
 
     const [printings, setPrintings] = useState([])
@@ -44,16 +45,9 @@ export default function Visualizer(offer) {
 
         handleShow()
     }
-    // console.log(printings)
 
 
-    //there's a good chance that choosing versions should be a part of the search feature, for workflow reaswons
     function VersionModal() {
-
-       function select(card){
-           console.log(card)
-           setSelection(card)
-       }
 
 
 
@@ -64,21 +58,25 @@ export default function Visualizer(offer) {
                 </Modal.Header>
                 <Modal.Body className="over-x">
                     {printings.map((printing) => (
-                    <div 
-                    key={printing.id} 
-                    id={printing.set_name} 
-                    className="selector"
-                    >
-                        <h4>{printing.set_name}</h4>
-                        <img src={printing.image_uris.small}></img>
-                        <Button 
-                        variant="primary"
-                        //the goal here is to get the button to highlight the card, then for the visualizer
-                        //to rerender whenever the save button is clicked so the new printing can update.
-                        //may make sense to change this workflow to selecting the printing before this.
-                        onClick={(e) => dispatch(state.card={...printing})}
-                        >Choose Printing</Button>
-                    </div>    
+                        <div
+                            key={printing.id}
+                            id={printing.set_name}
+                            className="selector"
+                        >
+                            <h4>{printing.set_name}</h4>
+                            <img
+                                src={printing.image_uris.small}
+                                alt={card.name}
+                            >
+                            </img>
+                            <Button
+                                variant="primary"
+                                //the goal here is to get the button to highlight the card, then for the visualizer
+                                //to rerender whenever the save button is clicked so the new printing can update.
+                                //may make sense to change this workflow to selecting the printing before this.
+                                onClick={(e) => dispatch(state.card = { ...printing })}
+                            >Choose Printing</Button>
+                        </div>
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
@@ -88,6 +86,20 @@ export default function Visualizer(offer) {
                 </Modal.Footer>
             </Modal >
         );
+    }
+
+    //adding to the current cart
+    function addToCart(e) {
+        let lineItem = {
+            name: card.name,
+            Estimate: suggested,
+            foil: state.foil,
+            Actual: offerField,
+            condition: state.condition,
+        }
+        dispatch([state.cart.push(lineItem)]);
+        localStorage.setItem("cart", JSON.stringify(state.cart));
+        setOfferField("")
     }
 
     return (
@@ -132,13 +144,20 @@ export default function Visualizer(offer) {
                 </Row>
                 <Row>
                     {/* put the current offer here.  This should update whenever the app renders */}
-                    Suggested Offer: {currentOffer}
+                    Suggested Offer: {suggested}
                 </Row>
                 <Row>
                     <Form className="buy-form">
                         <Form.Group className="buy-form" controlId="offerPrice">
-                            <Form.Control type="currency" placeholder="Your Offer" />
-                            <Button variant="success">Add to Offer</Button>
+                            <Form.Control
+                                type="currency"
+                                placeholder="Your Offer"
+                                onChange={(e) => setOfferField(e.target.value)}
+                            />
+                            <Button
+                                variant="success"
+                                onClick={addToCart}
+                            >Add to Offer</Button>
                         </Form.Group>
                     </Form>
                 </Row>

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Form, FormControl, Button, Row } from "react-bootstrap"
+import { useState } from "react";
+import { Form, FormControl, Button } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import Visualizer from "./Visualizer";
 import { offerPrice } from "./data";
@@ -9,10 +9,6 @@ export default function Search() {
     const [ state, dispatch ] = useGlobalState()
 
     var scryfall = require("scryfall-client");
-
-    const [currentCard, setCurrentCard] = useState({})
-    const [printings, setPrintings] = useState({})
-    console.log( typeof printings)
 
     //handles offer state
     const [offer, setOffer] = useState(0)
@@ -26,6 +22,7 @@ export default function Search() {
     const [foil, setFoil] = useState("non")
 
     const handleFoilChange = (event) => {
+        setFoil(event.target.value)
         dispatch(state.foil=event.target.value);
     };
 
@@ -42,6 +39,7 @@ export default function Search() {
 
     //changes the condition state object based on the dropdown
     const handleConditionChange = (event) => {
+        setCondition(event.target.value)
         dispatch(state.condition=event.target.value);
     };
 
