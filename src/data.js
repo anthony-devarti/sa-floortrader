@@ -41,7 +41,7 @@ export function getPrintings(endpoint) {
 export function offerPrice(price, foilPrice, foilStatus, condition) {
     console.log("foil", foilStatus, "condition", condition)
     let retail = price;
-    if (foilStatus == "non") {
+    if (foilStatus == 1) {
         retail = price
     } else {
         retail = foilPrice

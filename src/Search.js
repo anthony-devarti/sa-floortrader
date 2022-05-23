@@ -23,9 +23,9 @@ export default function Search() {
     // const [foilStatus, setFoilStatus] = useState("nonf")
 
     const handleFoilChange = (event) => {
-        let status = event.target.value
+        let status = Number(event.target.value)
         // setFoilStatus("foil status: ", status)
-        dispatch(state.foilStatus=event.target.value);
+        dispatch({ foilStatus: status });
     };
 
     //condition state
@@ -41,8 +41,9 @@ export default function Search() {
 
     //changes the condition state object based on the dropdown
     const handleConditionChange = (event) => {
-        setCondition(event.target.value)
-        dispatch(state.condition=event.target.value);
+        let parsed = parseFloat(event.target.value)
+        setCondition(parsed)
+        dispatch({ condition : parsed });
     };
 
     //determines what card is being searched
@@ -61,7 +62,8 @@ export default function Search() {
                 card.getPrice("usd_foil"); // '52.51'
                 localStorage.setItem("card", JSON.stringify(card))
                 //card variable is all of the key values pairs, so wrapping it up like this allows it to replace the previous card object in global state, rather than adding 100 new keys into gs
-                dispatch(state.card={card})
+                // dispatch(state.card={card})
+                dispatch({ card })
                 setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, state.foilStatus, condition))
                 // console.log("image", card.image_uris.normal)
                 console.log("card fetched by scryfall", state.card)

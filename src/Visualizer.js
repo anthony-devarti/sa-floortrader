@@ -72,7 +72,12 @@ export default function Visualizer(offer) {
                             <Button
                                 variant="primary"
                                 //this is adding global state keys for each key in the printing, rather than just replacing the value of the card key
-                                onClick={(e) => dispatch(state.card={...printing})}
+                                // onClick={(e) => dispatch(state.card={printing})}
+                                onClick={(e) => {
+                                    handleClose()
+                                    dispatch({ card: printing })
+                                }}
+                            // onClick={(e) => dispatch({ type: 'selectPrinting', payload: printing })}
                             >Choose Printing</Button>
                         </div>
                     ))}
@@ -126,13 +131,16 @@ export default function Visualizer(offer) {
                     <h2>Set</h2>
                 </Row>
                 <Row>
-                    <p>{card.set}</p>
-                </Row>
-                <Row style={{ justifyContent: "center" }}>
-                    <Button
-                        variant="primary"
-                        onClick={fetchModal}
-                        style={{ width: "fit-content" }}>Other Versions</Button>
+                    <Col className="center">
+                        <p>{card.set}</p>
+                    </Col>
+                    <Col className="center">
+                        <Button
+                            variant="primary"
+                            onClick={fetchModal}
+                            style={{ width: "fit-content" }}>Other Versions
+                        </Button>
+                    </Col>
                     <VersionModal />
                 </Row>
             </Col>
@@ -140,7 +148,7 @@ export default function Visualizer(offer) {
                 <Row className="cell-header">
                     <h2>Price</h2>
                 </Row>
-                <Row>
+                <Row className="center">
                     {/* put the current offer here.  This should update whenever the app renders */}
                     Suggested Offer: {suggested}
                 </Row>
