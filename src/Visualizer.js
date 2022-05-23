@@ -19,7 +19,7 @@ export default function Visualizer(offer) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let suggested = offerPrice(state.card.prices.usd, state.card.prices.usd_foil, state.foilStatus, state.condition)
+    let suggested = offerPrice(state.card.prices.usd, state.card.prices.usd_foil, state.foilStatus, state.condition, state.margins.margin, state.margins.bulkThreshold)
 
 
     const [printings, setPrintings] = useState([])
@@ -109,7 +109,7 @@ export default function Visualizer(offer) {
         <div className="visualizer">
             <Col className="cell">
                 <Row className="cell-header">
-                    <h2>Card Image</h2>
+                    <h2>Card</h2>
                 </Row>
                 <Row className="image-cell">
                     <img

@@ -64,7 +64,8 @@ export default function Search() {
                 //card variable is all of the key values pairs, so wrapping it up like this allows it to replace the previous card object in global state, rather than adding 100 new keys into gs
                 // dispatch(state.card={card})
                 dispatch({ card })
-                setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, state.foilStatus, condition))
+                //for some reason, this isn't making it to data as expected, it's undefined when it gets there
+                setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, state.foilStatus, condition, state.margins.margin, state.margins.bulkThresdhold))
                 // console.log("image", card.image_uris.normal)
                 console.log("card fetched by scryfall", state.card)
             });

@@ -174,13 +174,24 @@ let animar = {
   "_isDoublesided": false
 }
 
+let defaultMargins = {
+  margin: .3,
+  nm : 1,
+  lp : .8,
+  mp : .7,
+  hp : .6,
+  dmg : .25,
+  bulkThreshold : .1
+}
+
 const initialState = {
   cart: startCart,
   currentUser: user ? jwtDecode(user.access) : null,
   currentUserToken: user ? user.access : null,
   card: {...animar},
   foilStatus: 1,
-  condition: 1
+  condition: 1,
+  margins : defaultMargins
 }
 
 

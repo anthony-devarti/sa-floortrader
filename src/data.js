@@ -38,20 +38,19 @@ export function getPrintings(endpoint) {
 }
 
 //for some reason, foil is evaluating to true and non foil or non
-export function offerPrice(price, foilPrice, foilStatus, condition) {
-    console.log("foil", foilStatus, "condition", condition)
+export function offerPrice(price, foilPrice, foilStatus, condition, margin, bulk) {
+    // margin is undefined when it's being passed in
+    console.log(arguments)
     let retail = price;
     if (foilStatus == 1) {
         retail = price
+    //this will need to control for other finshes besides foil and non
     } else {
         retail = foilPrice
     }
-    //.3 will need to be replaced by margin variable later
-    console.log("retail: ", retail, "condition", condition)
-    let offer = (Math.floor((retail - retail * .3) * condition * 100)) / 100
+    let offer = (Math.floor((retail - retail * margin) * condition * 100)) / 100
     //bulk defintion will need to be replaced by variable later 
-    if (offer < .1) {
-        console.log("offer", offer)
+    if (offer < bulk) {
         return "Bulk"
     } else return "$" + offer
 }
