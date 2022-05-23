@@ -77,3 +77,14 @@
   align-content: center;
   justify-items: center;
 }
+
+.card-flex{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.slider-cards {
+  margin: 2rem;
+}

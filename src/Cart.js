@@ -26,13 +26,13 @@ export default function Cart() {
         console.log("removing this item: ", e.target.id);
         let newCart = state.cart;
         newCart.splice(e.target.id, 1);
-        dispatch(state.cart=newCart);
+        dispatch({cart : newCart});
         localStorage.setItem("cart", JSON.stringify(state.cart));
     }
     //this should dispatch an empty array to the cart, may need to update local storage later
     function clearCart() {
         console.log("emptying the cart")
-        dispatch(state.cart = []);
+        dispatch({cart : []});
         localStorage.setItem("cart", JSON.stringify(state.cart));
     }
     //this should move to the next step in the process
