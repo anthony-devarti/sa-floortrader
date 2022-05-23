@@ -83,21 +83,14 @@ export function foilTranslator(foilCode) {
 
 export function conditionTranslator(input) {
     switch (true) {
+        case input === 3:
+            return "Lightly Played"
+        case input === 2:
+            return "Moderately Played"
         case input === 1:
-            return "NM"
-            break;
-        case input === .8:
-            return "LP"
-            break;
-        case input === .7:
-            return "MP"
-            break;
-        case input === .6:
-            return "HP"
-        case input === .25:
-            return "DMG"
-            break;
-            break;
+            return "Heavily Played"
+        case input === 0:
+            return "Damaged"
         default:
             break;
     }
