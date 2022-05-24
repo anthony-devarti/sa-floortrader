@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import { Form, FormControl, Button, Row } from "react-bootstrap"
+import { useState } from "react";
+import { Form, FormControl, Button } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import Visualizer from "./Visualizer";
 import { offerPrice } from "./data";
+import GradeGuide from "./GradeGuide";
 
 export default function Search() {
 
-    const [ state, dispatch ] = useGlobalState()
+    const [state, dispatch] = useGlobalState()
 
     var scryfall = require("scryfall-client");
-
-    const [currentCard, setCurrentCard] = useState({})
 
     //handles offer state
     const [offer, setOffer] = useState(0)
 
     //foil state
     const options = [
-        { label: 'Non-Foil', value: 'non' },
-        { label: 'Foil', value: 'foil' },
+        { label: 'Non-Foil', value: 1 },
+        { label: 'Foil', value: 2 },
+        { label: "Etched", value: 3 }
     ];
 
-    const [foil, setFoil] = useState("non")
-
     const handleFoilChange = (event) => {
-        setFoil(event.target.value);
+        let status = Number(event.target.value)
+        // setFoilStatus("foil status: ", status)
+        dispatch({ foilStatus: status });
     };
 
     //condition state
@@ -40,63 +40,66 @@ export default function Search() {
 
     //changes the condition state object based on the dropdown
     const handleConditionChange = (event) => {
-        setCondition(event.target.value);
+        let parsed = parseFloat(event.target.value)
+        setCondition(parsed)
+        dispatch({ condition: parsed });
     };
 
     //determines what card is being searched
-    const [ searchValue, setSearchValue ] = useState("animar soul of elements")
+    const [searchValue, setSearchValue] = useState("animar soul of elements")
 
-    
+
     function handleSearch(e) {
         e.preventDefault()
         scryfall
-        .get("cards/named", {
-            fuzzy: searchValue,
-        })
-        .then(function (card) {
+            .get("cards/named", {
+                fuzzy: searchValue,
+            })
+            .then(function (card) {
                 card.getPrice(); // '11.25'
                 card.getPrice("usd"); // '11.25'
                 card.getPrice("usd_foil"); // '52.51'
-                console.log(condition)
-                // let result = {
-                //     name: card.name,
-                //     img: card.image_uris.normal,
-                //     price: Math.floor((card.prices.usd * condition)*100)/100,
-                //     foilPrice: card.prices.usd_foil * condition,
-                //     text: card.oracle_text,
-                //     tcgId: card.prints_search_uri,
-                //     set: card.set,
-                //     //this might not be right but I'm leaving it here as a reminder
-                //     versions: card.prints_search_uri
-                // }
-                // console.group(card)
                 localStorage.setItem("card", JSON.stringify(card))
-                dispatch(state.card={...card})
-                setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, foil, condition))
+                //card variable is all of the key values pairs, so wrapping it up like this allows it to replace the previous card object in global state, rather than adding 100 new keys into gs
+                // dispatch(state.card={card})
+                dispatch({ card })
+                //for some reason, this isn't making it to data as expected, it's undefined when it gets there
+                setOffer(offerPrice(card.prices.usd, card.prices.usd_foil, state.foilStatus, condition, state.margins.margin, state.margins.bulkThresdhold))
                 // console.log("image", card.image_uris.normal)
                 console.log("card fetched by scryfall", state.card)
             });
-        }
-        
-        return (
-            <>
+    }
+
+    //this should handle the grading guide modal
+    const [modalShow, setModalShow] = useState(false);
+
+    return (
+        <>
             <div className="narrow-row">
                 <label>
                     Foiling
-                    <select foil={foil} onChange={handleFoilChange}>
+                    <select value={state.foilStatus} onChange={handleFoilChange}>
                         {options.map((option) => (
                             <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
                     </select>
                 </label>
-                <label>
-                    Condition
-                    <select condition={condition} onChange={handleConditionChange}>
-                        {conditions.map((condition) => (
-                            <option key={condition.value} value={condition.value}>{condition.label}</option>
-                        ))}
-                    </select>
-                </label>
+                <div>
+                    <label>
+                        Condition
+                        <select condition={condition} onChange={handleConditionChange}>
+                            {conditions.map((condition) => (
+                                <option key={condition.value} value={condition.value}>{condition.label}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <Button
+                        variant="outline-info"
+                        style={{borderRadius:"50%", marginLeft:".5rem"}}
+                        onClick={() => setModalShow(true)}>
+                        ?
+                    </Button>
+                </div>
             </div>
             <div className="search-bar">
                 <Form className="d-flex" onSubmit={(e) => handleSearch(e)}>
@@ -111,6 +114,10 @@ export default function Search() {
                 </Form>
             </div>
             <Visualizer offer={offer} />
+            <GradeGuide
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </>
     )
 }

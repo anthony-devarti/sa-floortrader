@@ -1,7 +1,7 @@
-import { Col, Row, Button, Form, Modal } from "react-bootstrap"
-import { useState } from "react"
+import { Col, Row, Button, Form, Modal } from "react-bootstrap";
+import { useState } from "react";
 import { useGlobalState } from "./GlobalState";
-import { getPrintings, printings } from "./data";
+import { offerPrice } from "./data";
 
 export default function Visualizer(offer) {
 
@@ -9,14 +9,17 @@ export default function Visualizer(offer) {
 
     let card = state.card
     //for whatever reason, card.image_uris works, but when I go one deeper to normal, it can't be read
-    //console.log("card when it reaches visualizer: ", card.image_uris)
+    //console.log("card image when it reaches visualizer: ", card.image_uris)
 
     //console.log("offer: ", offer.offer)
+    const [offerField, setOfferField] = useState()
 
+    //modal behavior
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    let suggested = offerPrice(state.card.prices.usd, state.card.prices.usd_foil, state.foilStatus, state.condition, state.margins.margin, state.margins.bulkThreshold)
 
     const [printings, setPrintings] = useState([])
     function fetchModal() {
@@ -41,7 +44,6 @@ export default function Visualizer(offer) {
 
         handleShow()
     }
-    // console.log(printings)
 
     function VersionModal() {
 
@@ -54,31 +56,66 @@ export default function Visualizer(offer) {
                 </Modal.Header>
                 <Modal.Body className="over-x">
                     {printings.map((printing) => (
-                    <div key={printing.id} className="selector">
-                        <img src={printing.image_uris.small}></img>
-                    </div>    
+                        <div
+                            key={printing.id}
+                            id={printing.set_name}
+                            className="selector"
+                        >
+                            <h4>{printing.set_name}</h4>
+                            <img
+                                src={printing.image_uris.small}
+                                alt={card.name}
+                            >
+                            </img>
+                            <Button
+                                variant="primary"
+                                //this is adding global state keys for each key in the printing, rather than just replacing the value of the card key
+                                // onClick={(e) => dispatch(state.card={printing})}
+                                onClick={(e) => {
+                                    handleClose()
+                                    dispatch({ card: printing })
+                                }}
+                            // onClick={(e) => dispatch({ type: 'selectPrinting', payload: printing })}
+                            >Choose Printing</Button>
+                        </div>
                     ))}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
         );
+    }
+
+    //adding to the current cart
+    function addToCart(e) {
+        let lineItem = {
+            name: card.name,
+            Estimate: suggested,
+            foil: state.foil,
+            Actual: offerField,
+            condition: state.condition,
+        }
+        dispatch([state.cart.push(lineItem)]);
+        localStorage.setItem("cart", JSON.stringify(state.cart));
+        setOfferField("")
     }
 
     return (
         <div className="visualizer">
             <Col className="cell">
                 <Row className="cell-header">
-                    <h2>Card Image</h2>
+                    <h2>Card</h2>
                 </Row>
                 <Row className="image-cell">
-                    <img src={state.card.image_uris} style={{ height: "32vh", width: "auto" }}></img>
+                    <img
+                        src={card.image_uris.normal}
+                        style={{ height: "32vh", width: "auto" }}
+                        alt={card.name}
+                    >
+                    </img>
                 </Row>
             </Col>
             <Col className="cell">
@@ -92,13 +129,16 @@ export default function Visualizer(offer) {
                     <h2>Set</h2>
                 </Row>
                 <Row>
-                    <p>{card.set}</p>
-                </Row>
-                <Row style={{ justifyContent: "center" }}>
-                    <Button
-                        variant="primary"
-                        onClick={fetchModal}
-                        style={{ width: "fit-content" }}>Other Versions</Button>
+                    <Col className="center">
+                        <p>{card.set}</p>
+                    </Col>
+                    <Col className="center">
+                        <Button
+                            variant="primary"
+                            onClick={fetchModal}
+                            style={{ width: "fit-content" }}>Versions
+                        </Button>
+                    </Col>
                     <VersionModal />
                 </Row>
             </Col>
@@ -106,14 +146,22 @@ export default function Visualizer(offer) {
                 <Row className="cell-header">
                     <h2>Price</h2>
                 </Row>
-                <Row>
-                    Suggested Offer: {offer.offer}
+                <Row className="center">
+                    {/* put the current offer here.  This should update whenever the app renders */}
+                    Suggested Offer: {suggested}
                 </Row>
                 <Row>
                     <Form className="buy-form">
                         <Form.Group className="buy-form" controlId="offerPrice">
-                            <Form.Control type="currency" placeholder="Your Offer" />
-                            <Button variant="success">Add to Offer</Button>
+                            <Form.Control
+                                type="currency"
+                                placeholder="Your Offer"
+                                onChange={(e) => setOfferField(e.target.value)}
+                            />
+                            <Button
+                                variant="success"
+                                onClick={addToCart}
+                            >Add to Offer</Button>
                         </Form.Group>
                     </Form>
                 </Row>

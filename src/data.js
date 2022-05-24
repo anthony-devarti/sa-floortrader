@@ -1,3 +1,6 @@
+
+
+
 export async function printings(cardName) {
     var scryfall = require("scryfall-client");
     scryfall
@@ -16,7 +19,7 @@ export async function printings(cardName) {
 }
 
 export function getPrintings(endpoint) {
-    
+
     const fetchPromise = fetch(`https://api.scryfall.com/cards/search?order=released&q=oracleid%3A${endpoint}&unique=prints`);
 
     fetchPromise
@@ -34,17 +37,68 @@ export function getPrintings(endpoint) {
         });
 }
 
-export function offerPrice(price, foilPrice, foil, condition) {
-    let retail;
-    if (foil == "non") {
+//for some reason, foil is evaluating to true and non foil or non
+export function offerPrice(price, foilPrice, foilStatus, condition, margin, bulk) {
+    // margin is undefined when it's being passed in
+    console.log(arguments)
+    let retail = price;
+    if (foilStatus == 1) {
         retail = price
+    //this will need to control for other finshes besides foil and non
     } else {
         retail = foilPrice
     }
-    //.3 will need to be replaced by margin variable later
-    let offer = (Math.floor((retail - retail * .3) * condition * 100)) / 100
+    let offer = (Math.floor((retail - retail * margin) * condition * 100)) / 100
     //bulk defintion will need to be replaced by variable later 
-    if (offer < .1) {
+    if (offer < bulk) {
         return "Bulk"
     } else return "$" + offer
+}
+
+export function addToCart(card, suggested, offer, condition) {
+    //define everything that needs to be included in the total order information
+    //this may need to take place inside of a component.
+    let lineItem = {
+        name: card.name,
+        Estimate: suggested,
+        Actual: offer,
+        condition: condition,
+    }
+}
+
+export function foilTranslator(foilCode) {
+    switch (true) {
+        case foilCode === 1:
+            return "Non-Foil"
+            break;
+        case foilCode === 2:
+            return "Foil"
+            break;
+        case foilCode === 3:
+            return "Etched"
+        default:
+            break;
+    }
+}
+
+export function conditionTranslator(input) {
+    switch (true) {
+        case input === 1:
+            return "NM"
+            break;
+        case input === .8:
+            return "LP"
+            break;
+        case input === .7:
+            return "MP"
+            break;
+        case input === .6:
+            return "HP"
+        case input === .25:
+            return "DMG"
+            break;
+            break;
+        default:
+            break;
+    }
 }
