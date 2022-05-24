@@ -2,6 +2,7 @@ import { Col, Row, Button, Form, Modal } from "react-bootstrap";
 import { useState } from "react";
 import { useGlobalState } from "./GlobalState";
 import { offerPrice } from "./data";
+import BulkGuide from "./help/BulkGuide"
 
 export default function Visualizer(offer) {
 
@@ -13,6 +14,8 @@ export default function Visualizer(offer) {
 
     //console.log("offer: ", offer.offer)
     const [offerField, setOfferField] = useState()
+    const [bulkRares, setBulkRares] = useState(0)
+    const [bulkCU, setBulkCU] = useState(0)
 
     //modal behavior
     const [show, setShow] = useState(false);
@@ -103,6 +106,33 @@ export default function Visualizer(offer) {
         setOfferField("")
     }
 
+    function addBulk(e) {
+        console.log("id: ", e.target.id, "rare rate: ", state.margins.bulkRareRate, "cu rate: ", state.margins.bulkCURate)
+        let rarity = e.target.id
+        let price = 0
+        let title
+        if (rarity == "rare") {
+            price = bulkRares * state.margins.bulkRareRate
+            title = "Bulk Rares"
+        } else {
+            price = bulkCU * state.margins.bulkCURate
+            title = "Bulk C/U"
+        }
+        console.log(price)
+        let lineItem = {
+            name: title,
+            Estimate: price,
+            foil: "N/A",
+            Actual: price,
+            condition: "N/A",
+        }
+        dispatch([state.cart.push(lineItem)]);
+        localStorage.setItem("cart", JSON.stringify(state.cart));
+    }
+
+    //this should handle the grading guide modal
+    const [modalShow, setModalShow] = useState(false);
+
     return (
         <div className="visualizer">
             <Col className="cell">
@@ -148,7 +178,7 @@ export default function Visualizer(offer) {
                 </Row>
                 <Row className="center">
                     {/* put the current offer here.  This should update whenever the app renders */}
-                    Suggested Offer: {suggested}
+                    Suggested Offer: ${suggested}
                 </Row>
                 <Row>
                     <Form className="buy-form">
@@ -161,11 +191,61 @@ export default function Visualizer(offer) {
                             <Button
                                 variant="success"
                                 onClick={addToCart}
-                            >Add to Offer</Button>
+                                size="sm"
+                            >+</Button>
+                        </Form.Group>
+                    </Form>
+                </Row>
+                <Row className="bulk-title">
+                    Bulk
+                    <Button
+                        variant="outline-info"
+                        size="sm"
+                        className="circle-button"
+                        onClick={() => setModalShow(true)}>
+                        ?
+                    </Button>
+                </Row>
+                <Row>
+                    <Form className="buy-form">
+                        <Form.Group className="buy-form" controlId="bulkrares">
+                            <Form.Control
+                                type="currency"
+                                placeholder="Bulk Rare Count"
+                                onChange={(e) => setBulkRares(e.target.value)}
+                            />
+                            <Button
+                                variant="success"
+                                onClick={addBulk}
+                                id="rare"
+                                size="sm"
+                            >+</Button>
+                        </Form.Group>
+                    </Form>
+                </Row>
+                <Row>
+                    <Form className="buy-form">
+                        <Form.Group className="buy-form" controlId="bulkcu">
+                            <Form.Control
+                                type="currency"
+                                placeholder="Bulk C/U Count"
+                                onChange={(e) => setBulkCU(e.target.value)}
+                            />
+                            <Button
+                                variant="success"
+                                onClick={addBulk}
+                                //common uncommon id
+                                id="cu"
+                                size="sm"
+                            >+</Button>
                         </Form.Group>
                     </Form>
                 </Row>
             </Col>
+            <BulkGuide
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </div>
     )
 }

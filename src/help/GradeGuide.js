@@ -21,7 +21,7 @@ export default function GradeGuide(props) {
                     <h5>Near Mint</h5>
                     <Row className="condition-section">
                         <Col>
-                            <img src={process.env.PUBLIC_URL + 'Images/NearMintCard.png'} className="grade-img" />
+                            <img src={process.env.PUBLIC_URL + 'Images/NearMintCard.png'} className="grade-img" alt="near mint"/>
                         </Col>
                         <Col>
                             Cards in Near Mint (NM) condition show minimal wear from shuffling, play or handling and can have a nearly unmarked surface, crisp corners and unblemished edges outside of a few slight flaws. A Near Mint card may have slight edge wear or a scratch or three, but overall look nearly unplayed with no major defects.
@@ -34,7 +34,7 @@ export default function GradeGuide(props) {
                     <Row className="condition-section">
                         <h5>Lightly Played</h5>
                         <Col>
-                            <img src={process.env.PUBLIC_URL + 'Images/LightlyPlayedCard.png'} className="grade-img" />
+                            <img src={process.env.PUBLIC_URL + 'Images/LightlyPlayedCard.png'} className="grade-img" alt="lightly played"/>
                         </Col>
                         <Col>
                             Cards in Lightly Played (LP) condition may have minor border or corner wear, scuffs or scratches. There are no major defects such as grime, bends or issues with the structural integrity of the card. Noticeable imperfections are okay, but none should be too severe or at too high a volume.
@@ -47,7 +47,7 @@ export default function GradeGuide(props) {
                     <Row className="condition-selector">
                         <h5>Moderately Played</h5>
                         <Col>
-                            <img src={process.env.PUBLIC_URL + 'Images/ModeratelyPlayedCard.png'} className="grade-img" />
+                            <img src={process.env.PUBLIC_URL + 'Images/ModeratelyPlayedCard.png'} className="grade-img" alt="moderately played"/>
                         </Col>
                         <Col>
                             Cards in Moderately Played (MP) condition can have border wear, corner wear, scratching or scuffing, creases or whitening or any combination of moderate examples of these flaws.
@@ -60,7 +60,7 @@ export default function GradeGuide(props) {
                     <Row className="condition-selector">
                         <h5>Heavily Played</h5>
                         <Col>
-                            <img src={process.env.PUBLIC_URL + 'Images/HeavilyPlayedCard.png'} className="grade-img" />
+                            <img src={process.env.PUBLIC_URL + 'Images/HeavilyPlayedCard.png'} className="grade-img" alt="heavily played"/>
                         </Col>
                         <Col>
                             Cards in Heavily Played (HP) condition show a major amount of wear. Cards can show a variety of moderate imperfections along with creasing, whitening and bends. Heavily Played cards can also have flaws that impact the integrity of the card, but the card can still be sleeve playable.
@@ -71,7 +71,7 @@ export default function GradeGuide(props) {
                     <Row className="condition-selector">
                         <h5>Damaged</h5>
                         <Col>
-                            <img src={process.env.PUBLIC_URL + 'Images/DamagedCard.png'} className="grade-img" />
+                            <img src={process.env.PUBLIC_URL + 'Images/DamagedCard.png'} className="grade-img" alt="damaged"/>
                         </Col>
                         <Col>
                             Damaged cards show wear or imperfections beyond the standards for other conditions. Cards in Damaged condition can also exhibit an imperfection that may make the card illegal for tournament play, even in a sleeve. Cards in Damaged condition may have major border wear, corner wear, scratching or scuffing, as well as folds, creases, tears or other damage that impacts the structural integrity of the card.

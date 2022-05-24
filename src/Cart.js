@@ -1,5 +1,6 @@
 import { Button, Table } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
+import { conditionTranslator } from "./data";
 
 
 export default function Cart() {
@@ -8,10 +9,12 @@ export default function Cart() {
     //the totals for all items in the cart
     let suggestedTotal = state.cart.reduce((accumulator, object) => {
         //will this act up if a total begins or ends with a 0?
-        const parsed = parseFloat(object.Estimate.slice(1, 6))
+        console.log("Estimate type: ", typeof object.Estimate)
+        const parsed = parseFloat(object.Estimate)
         return accumulator + parsed;
     }, 0);
     let offerTotal = state.cart.reduce((accumulator, object) => {
+        console.log("actual: ", typeof object.Actual)
         const parsed = parseFloat(object.Actual)
         return accumulator + parsed;
     }, 0);
@@ -64,22 +67,22 @@ export default function Cart() {
                         <tr key={index + item.name}>
                             <td>{index + 1}</td>
                             <td>{item.name}</td>
-                            <td>{item.condition}</td>
-                            <td>{item.Estimate}</td>
-                            <td>{item.Actual}</td>
+                            <td>{conditionTranslator(item.condition)}</td>
+                            <td>${item.Estimate}</td>
+                            <td>${item.Actual}</td>
                             <td><Button
                                 variant="danger"
                                 id={index}
                                 onClick={(e) => { remove(e) }}
-                            >Remove</Button></td>
+                            >-</Button></td>
                         </tr>
                     ))}
                     <tr className="footer-row">
                         <td>Totals</td>
                         <td>{state.cart.length} Items</td>
-                        <td>Delta: {delta}</td>
-                        <td>Suggested: {suggestedTotal}</td>
-                        <td>Offered: {offerTotal}</td>
+                        <td>Delta: ${delta}</td>
+                        <td>Suggested: ${suggestedTotal}</td>
+                        <td>Offered: ${offerTotal}</td>
                         <td>
                             <Button
                                 variant="danger"

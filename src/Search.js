@@ -3,7 +3,7 @@ import { Form, FormControl, Button } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import Visualizer from "./Visualizer";
 import { offerPrice } from "./data";
-import GradeGuide from "./GradeGuide";
+import GradeGuide from "./help/GradeGuide";
 
 export default function Search() {
 
@@ -95,7 +95,8 @@ export default function Search() {
                     </label>
                     <Button
                         variant="outline-info"
-                        style={{borderRadius:"50%", marginLeft:".5rem"}}
+                        size="sm"
+                        className="circle-button"
                         onClick={() => setModalShow(true)}>
                         ?
                     </Button>
