@@ -49,31 +49,18 @@ export default function ConditionSlider() {
     }
 
 
-    const styling = {
-        track: {
-            backgroundColor: 'red'
-        },
-        active: {
-            backgroundColor: 'red'
-        },
-        thumb: {
-            width: 50,
-            height: 50
-        },
-        disabled: {
-            opacity: 0.5
-        }
-    }
-
     return (
         <>
             <Card className='slider-cards'>
                 <Card.Header>Near Mint/Margin</Card.Header>
                 <Card.Body>
                     <Slider
-                        style={styling}
                         axis="x" x={margin.x}
                         onChange={setMargin}
+                        style={
+                            {width:"90vw",
+                            height:"40px",
+                        }}
                     />
                 </Card.Body>
                 <Card.Footer>{margin.x}% of Retail

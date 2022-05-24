@@ -21,7 +21,6 @@ export default function Visualizer(offer) {
 
     let suggested = offerPrice(state.card.prices.usd, state.card.prices.usd_foil, state.foilStatus, state.condition, state.margins.margin, state.margins.bulkThreshold)
 
-
     const [printings, setPrintings] = useState([])
     function fetchModal() {
         //this is hitting the api whenever the search value state is updating
@@ -45,7 +44,6 @@ export default function Visualizer(offer) {
 
         handleShow()
     }
-
 
     function VersionModal() {
 
@@ -138,7 +136,7 @@ export default function Visualizer(offer) {
                         <Button
                             variant="primary"
                             onClick={fetchModal}
-                            style={{ width: "fit-content" }}>Other Versions
+                            style={{ width: "fit-content" }}>Versions
                         </Button>
                     </Col>
                     <VersionModal />

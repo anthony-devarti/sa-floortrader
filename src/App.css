@@ -88,3 +88,19 @@
 .slider-cards {
   margin: 2rem;
 }
+
+.long-body{
+  overflow-y: scroll;
+}
+
+.condition-selection{
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.grade-img{
+  width: -webkit-fill-available;
+  padding-top: 1.5rem;
+}

@@ -3,10 +3,11 @@ import { Form, FormControl, Button } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import Visualizer from "./Visualizer";
 import { offerPrice } from "./data";
+import GradeGuide from "./GradeGuide";
 
 export default function Search() {
 
-    const [ state, dispatch ] = useGlobalState()
+    const [state, dispatch] = useGlobalState()
 
     var scryfall = require("scryfall-client");
 
@@ -19,8 +20,6 @@ export default function Search() {
         { label: 'Foil', value: 2 },
         { label: "Etched", value: 3 }
     ];
-
-    // const [foilStatus, setFoilStatus] = useState("nonf")
 
     const handleFoilChange = (event) => {
         let status = Number(event.target.value)
@@ -43,20 +42,20 @@ export default function Search() {
     const handleConditionChange = (event) => {
         let parsed = parseFloat(event.target.value)
         setCondition(parsed)
-        dispatch({ condition : parsed });
+        dispatch({ condition: parsed });
     };
 
     //determines what card is being searched
-    const [ searchValue, setSearchValue ] = useState("animar soul of elements")
+    const [searchValue, setSearchValue] = useState("animar soul of elements")
 
-    
+
     function handleSearch(e) {
         e.preventDefault()
         scryfall
-        .get("cards/named", {
-            fuzzy: searchValue,
-        })
-        .then(function (card) {
+            .get("cards/named", {
+                fuzzy: searchValue,
+            })
+            .then(function (card) {
                 card.getPrice(); // '11.25'
                 card.getPrice("usd"); // '11.25'
                 card.getPrice("usd_foil"); // '52.51'
@@ -69,12 +68,13 @@ export default function Search() {
                 // console.log("image", card.image_uris.normal)
                 console.log("card fetched by scryfall", state.card)
             });
-        }
+    }
 
-    
-        
-        return (
-            <>
+    //this should handle the grading guide modal
+    const [modalShow, setModalShow] = useState(false);
+
+    return (
+        <>
             <div className="narrow-row">
                 <label>
                     Foiling
@@ -84,14 +84,22 @@ export default function Search() {
                         ))}
                     </select>
                 </label>
-                <label>
-                    Condition
-                    <select condition={condition} onChange={handleConditionChange}>
-                        {conditions.map((condition) => (
-                            <option key={condition.value} value={condition.value}>{condition.label}</option>
-                        ))}
-                    </select>
-                </label>
+                <div>
+                    <label>
+                        Condition
+                        <select condition={condition} onChange={handleConditionChange}>
+                            {conditions.map((condition) => (
+                                <option key={condition.value} value={condition.value}>{condition.label}</option>
+                            ))}
+                        </select>
+                    </label>
+                    <Button
+                        variant="outline-info"
+                        style={{borderRadius:"50%", marginLeft:".5rem"}}
+                        onClick={() => setModalShow(true)}>
+                        ?
+                    </Button>
+                </div>
             </div>
             <div className="search-bar">
                 <Form className="d-flex" onSubmit={(e) => handleSearch(e)}>
@@ -106,6 +114,10 @@ export default function Search() {
                 </Form>
             </div>
             <Visualizer offer={offer} />
+            <GradeGuide
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </>
     )
 }
