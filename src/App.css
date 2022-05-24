@@ -104,3 +104,13 @@
   width: -webkit-fill-available;
   padding-top: 1.5rem;
 }
+
+.dan-schneider{
+  display: flex;
+  flex: row;
+  justify-content: space-around;
+}
+
+.circle-button{
+  border-radius: 50%;
+}
