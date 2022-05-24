@@ -1,6 +1,7 @@
 import { Button, Table } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import { conditionTranslator } from "./data";
+import axios from "axios";
 
 
 export default function Cart() {
@@ -29,13 +30,13 @@ export default function Cart() {
         console.log("removing this item: ", e.target.id);
         let newCart = state.cart;
         newCart.splice(e.target.id, 1);
-        dispatch({cart : newCart});
+        dispatch({ cart: newCart });
         localStorage.setItem("cart", JSON.stringify(state.cart));
     }
     //this should dispatch an empty array to the cart, may need to update local storage later
     function clearCart() {
         console.log("emptying the cart")
-        dispatch({cart : []});
+        dispatch({ cart: [] });
         localStorage.setItem("cart", JSON.stringify(state.cart));
     }
     //this should move to the next step in the process
@@ -44,6 +45,29 @@ export default function Cart() {
 
     function submit() {
         console.log("finalize the buy and continue the buying process")
+        //how did I get this set up last time around?
+        //I need to post to items and orders at the same time.
+        const orderObject = {
+            "total_paid": offerTotal,
+            "pub_date": Date.now(),
+            "suggested": suggestedTotal,
+            "delta": suggestedTotal=offerTotal,
+            "note": "None"
+        }
+        axios
+            .post(
+                process.env.REACT_APP_BASE + "item/create_orders/",
+                orderObject
+            )
+            //need to save response.data to a variable
+            .then(function (response) {
+                console.log(response);
+                // setCurrentId(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
 
@@ -88,7 +112,9 @@ export default function Cart() {
                                 variant="danger"
                                 onClick={clearCart}
                             >Clear</Button>
-                            <Button variant="success">Submit</Button></td>
+                            <Button
+                                variant="success"
+                                onClick={() => submit()}>Submit</Button></td>
                     </tr>
                 </tbody>
             </Table>
