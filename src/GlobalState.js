@@ -12,6 +12,7 @@ if (saved) {
 
 let user = JSON.parse(localStorage.getItem('user'))
 
+//this is in here as a starting point.  I don't think I want the visualizer to ever look empty
 let animar = {
   "object": "card",
   "id": "1df98d4a-0f11-4064-a113-54ab14b9b3eb",
@@ -181,7 +182,9 @@ let defaultMargins = {
   mp : .7,
   hp : .6,
   dmg : .25,
-  bulkThreshold : .1
+  bulkThreshold : .1,
+  bulkRareRate: .08,
+  bulkCURate: .003
 }
 
 const initialState = {

@@ -52,7 +52,7 @@ export function offerPrice(price, foilPrice, foilStatus, condition, margin, bulk
     //bulk defintion will need to be replaced by variable later 
     if (offer < bulk) {
         return "Bulk"
-    } else return "$" + offer
+    } else return  offer
 }
 
 export function addToCart(card, suggested, offer, condition) {
@@ -70,10 +70,8 @@ export function foilTranslator(foilCode) {
     switch (true) {
         case foilCode === 1:
             return "Non-Foil"
-            break;
         case foilCode === 2:
             return "Foil"
-            break;
         case foilCode === 3:
             return "Etched"
         default:
@@ -85,20 +83,15 @@ export function conditionTranslator(input) {
     switch (true) {
         case input === 1:
             return "NM"
-            break;
         case input === .8:
             return "LP"
-            break;
         case input === .7:
             return "MP"
-            break;
         case input === .6:
             return "HP"
         case input === .25:
             return "DMG"
-            break;
-            break;
         default:
-            break;
+            return "N/A"
     }
 }
