@@ -2,6 +2,9 @@ import { Button, Table } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import { conditionTranslator } from "./data";
 import axios from "axios";
+import { API_ROOT } from "./data";
+import BuyConfirmation from "./help/BuyConfirmation";
+import { useState } from "react";
 
 
 export default function Cart() {
@@ -23,9 +26,6 @@ export default function Cart() {
     let delta = (Math.round((suggestedTotal - offerTotal) * 100)) / 100
 
     //group that handles button actions in the cart//
-
-    //this is what runs when an item is removed from the cart
-    //it should edit the cart to remove this specific instance of the item
     function remove(e) {
         console.log("removing this item: ", e.target.id);
         let newCart = state.cart;
@@ -33,15 +33,21 @@ export default function Cart() {
         dispatch({ cart: newCart });
         localStorage.setItem("cart", JSON.stringify(state.cart));
     }
-    //this should dispatch an empty array to the cart, may need to update local storage later
+
     function clearCart() {
         console.log("emptying the cart")
         dispatch({ cart: [] });
         localStorage.setItem("cart", JSON.stringify(state.cart));
     }
+
+    const [confirmationModalShow, setConfirmationModalShow] = useState(false);
+
+
     //this should move to the next step in the process
     //it nneeds to package the buy up into an object, assign it a unique id, create a barcode for that unique ID, and eventually push that buy to the backend to be stored so it can be verified later
     //buy should include each line item, the total suggested, the total paid, and the delta, the date now when the order was submitted, as well as the user (eventually)
+
+    const [orderDetails, setOrderDetails] = useState({})
 
     function submit() {
         console.log("suggested: ", suggestedTotal, "offer: ", offerTotal, "delta: ", delta)
@@ -49,21 +55,21 @@ export default function Cart() {
         //I need to post to items and orders at the same time.
         const orderObject = {
             "total_paid": offerTotal,
-             "pub_date": new Date(),
-             "suggested": suggestedTotal,
-             "delta": delta,
-             "seller": "Unknown",
-             "note": "None",
-             "buyer": 1,
-             "order_items": state.cart
-           }
+            "pub_date": new Date(),
+            "suggested": suggestedTotal,
+            "delta": delta,
+            "seller": "Unknown",
+            "note": "None",
+            "buyer": 1,
+            "order_items": state.cart
+        }
         console.log(orderObject)
         axios
             .post(
-                "https://8000-anthonydevart-sabackend-7a6kfg8m22y.ws-us45.gitpod.io/strange/items/create_orders/",
+                API_ROOT + "/items/create_orders/",
                 orderObject
             )
-        //     //need to save response.data to a variable
+            //     //need to save response.data to a variable
             .then(function (response) {
                 console.log(response);
                 // setCurrentId(response.data);
@@ -71,6 +77,9 @@ export default function Cart() {
             .catch(function (error) {
                 console.log(error);
             });
+        setOrderDetails(orderObject)
+        setConfirmationModalShow(true)
+        clearCart()
 
     }
 
@@ -122,6 +131,12 @@ export default function Cart() {
                     </tr>
                 </tbody>
             </Table>
+            <BuyConfirmation
+                order={orderDetails}
+                show={confirmationModalShow}
+                onHide={() => setConfirmationModalShow(false)}
+                
+            />
         </>
     )
 }

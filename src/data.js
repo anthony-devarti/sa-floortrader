@@ -1,4 +1,4 @@
-
+import axios from "axios";
 
 
 export async function printings(cardName) {
@@ -95,3 +95,11 @@ export function conditionTranslator(input) {
             return "N/A"
     }
 }
+
+export async function axiosGet(endpoint) {
+    return axios
+      .get(API_ROOT + endpoint)
+      .then((response) => response.data);
+  }
+
+export const API_ROOT = "https://8000-anthonydevart-sabackend-7a6kfg8m22y.ws-us45.gitpod.io/strange"
