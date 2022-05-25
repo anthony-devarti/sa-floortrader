@@ -3,29 +3,24 @@ import { Button, ButtonGroup } from "react-bootstrap";
 import { axiosGet, conditionTranslator } from "../data";
 import { useGlobalState } from "../GlobalState";
 import { useState, useEffect } from "react";
-import { compareAsc, format } from 'date-fns'
+import { compareAsc, format } from "date-fns";
 
 export default function History() {
-  
   const [state, dispatch] = useGlobalState();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    let saved = localStorage.getItem("orders");
-    if (!saved) {
-      async function fetchData() {
-        const response = await axiosGet(`/orders/?id=&buyer__id=1`);
-        setOrders(response);
-        localStorage.setItem("orders", JSON.stringify(response));
-        console.log({ response });
-      }
-      fetchData();
-    } else {
-      setOrders(JSON.parse(saved));
+    //the user is hard-coded now, but can be manipulated later
+    let user = 1
+    async function fetchData() {
+      const response = await axiosGet(`/orders/?id=&buyer__id=${user}`);
+      setOrders(response);
+      localStorage.setItem("orders", JSON.stringify(response));
+      console.log({ response });
     }
-  }, []);
-
-  
+    fetchData();
+    //dependency array is set to re-fetch when the cart changes
+  }, [state.cart]);
 
   return (
     <>

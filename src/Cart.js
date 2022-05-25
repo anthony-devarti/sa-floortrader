@@ -13,12 +13,12 @@ export default function Cart() {
     //the totals for all items in the cart
     let suggestedTotal = state.cart.reduce((accumulator, object) => {
         //will this act up if a total begins or ends with a 0?
-        console.log("Estimate type: ", typeof object.Estimate)
+        // console.log("Estimate type: ", typeof object.Estimate)
         const parsed = parseFloat(object.Estimate)
         return accumulator + parsed;
     }, 0);
     let offerTotal = state.cart.reduce((accumulator, object) => {
-        console.log("actual: ", typeof object.Actual)
+        // console.log("actual: ", typeof object.Actual)
         const parsed = parseFloat(object.Actual)
         return accumulator + parsed;
     }, 0);
@@ -27,7 +27,7 @@ export default function Cart() {
 
     //group that handles button actions in the cart//
     function remove(e) {
-        console.log("removing this item: ", e.target.id);
+        // console.log("removing this item: ", e.target.id);
         let newCart = state.cart;
         newCart.splice(e.target.id, 1);
         dispatch({ cart: newCart });
@@ -35,9 +35,9 @@ export default function Cart() {
     }
 
     function clearCart() {
-        console.log("emptying the cart")
+        // console.log("emptying the cart")
         dispatch({ cart: [] });
-        localStorage.setItem("cart", JSON.stringify(state.cart));
+        localStorage.setItem("cart", JSON.stringify([]));
     }
 
     const [confirmationModalShow, setConfirmationModalShow] = useState(false);
@@ -48,9 +48,10 @@ export default function Cart() {
     //buy should include each line item, the total suggested, the total paid, and the delta, the date now when the order was submitted, as well as the user (eventually)
 
     const [orderDetails, setOrderDetails] = useState({})
+    const [orderId, setOrderId] = useState()
 
     function submit() {
-        console.log("suggested: ", suggestedTotal, "offer: ", offerTotal, "delta: ", delta)
+        // console.log("suggested: ", suggestedTotal, "offer: ", offerTotal, "delta: ", delta)
         //how did I get this set up last time around?
         //I need to post to items and orders at the same time.
         const orderObject = {
@@ -63,16 +64,16 @@ export default function Cart() {
             "buyer": 1,
             "order_items": state.cart
         }
-        console.log(orderObject)
+        // console.log(orderObject)
         axios
             .post(
                 API_ROOT + "/items/create_orders/",
                 orderObject
             )
-            //     //need to save response.data to a variable
+            //maybe the order number is hiding out in here somewhere.
             .then(function (response) {
                 console.log(response);
-                // setCurrentId(response.data);
+                setOrderId(response.data);
             })
             .catch(function (error) {
                 console.log(error);
@@ -133,6 +134,7 @@ export default function Cart() {
             </Table>
             <BuyConfirmation
                 order={orderDetails}
+                id={orderId}
                 show={confirmationModalShow}
                 onHide={() => setConfirmationModalShow(false)}
                 

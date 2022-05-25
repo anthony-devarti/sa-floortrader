@@ -40,7 +40,7 @@ export function getPrintings(endpoint) {
 //for some reason, foil is evaluating to true and non foil or non
 export function offerPrice(price, foilPrice, foilStatus, condition, margin, bulk) {
     // margin is undefined when it's being passed in
-    console.log(arguments)
+    // console.log(arguments)
     let retail = price;
     if (foilStatus == 1) {
         retail = price
