@@ -132,3 +132,22 @@
   padding-left: .5rem;
   padding-right: .5rem;
 }
+
+.login-screen{
+  height: 110vh;
+  width: 100vw;
+  background-color: black;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: absolute;
+  top: -10px;
+}
+
+.login-form{
+  display: flex;
+  flex-direction: row;
+}

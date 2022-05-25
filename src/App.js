@@ -1,11 +1,13 @@
 import Body from './Body';
 import { Navbar, Nav, Container, Modal, Button } from 'react-bootstrap';
 import { useState } from 'react';
-import Login from './Login'
+import Login from './services/Login'
+import { useGlobalState } from './GlobalState';
 import './App.css';
 
 function App() {
-  const [view, setView] = useState(1)
+  const[state, dispatch] = useGlobalState()
+  const [view, setView] = useState(0)
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -40,10 +42,10 @@ function App() {
         <Container>
           <Navbar.Brand href="/buy">Strange Aeons</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={() => setView(1)}>Buy</Nav.Link> | {" "}
-            <Nav.Link onClick={() => setView(2)}>History</Nav.Link> | {" "}
-            <Nav.Link onClick={() => setView(3)}>Settings</Nav.Link>
-            <Nav.Link onClick={() => setView(4)}>Profile</Nav.Link>
+            <Nav.Link onClick={() => dispatch({view:1})}>Buy</Nav.Link> | {" "}
+            <Nav.Link onClick={() => dispatch({view:2})}>History</Nav.Link> | {" "}
+            <Nav.Link onClick={() => dispatch({view:3})}>Settings</Nav.Link>
+            <Nav.Link onClick={() => dispatch({view:4})}>Profile</Nav.Link>
             <Nav.Link onClick={() => handleShow()}>Login</Nav.Link>
           </Nav>
           <LoginHandler />

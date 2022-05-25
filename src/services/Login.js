@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import AuthService from "./services/auth.service";
-import { useGlobalState } from "./GlobalState";
+import AuthService from "./auth.service";
+import { useGlobalState } from "../GlobalState";
 import jwtDecode from "jwt-decode";
 
-const Login = ({handleClose}) => {
+const Login = ({ handleClose }) => {
 
-  const [ state, dispatch ] = useGlobalState();
+  const [state, dispatch] = useGlobalState();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,20 +22,21 @@ const Login = ({handleClose}) => {
           currentUser: data
         })
       });
-  }
-
-  //there's probably a way to stack these two together in the onsubmit, but I broke it out into 2.  I handed e down from the submit to the handlelogin to preserve the previous data flow
-  function handleSubmit(e){
-    handleLogin(e);
-    handleClose();
+      //this is trying to check to see if they are logged in and send them to a different view, but I don't think it's working as expected
+    if (state.user) {
+      dispatch({ view: 1 })
+    } else {
+      alert("You done goofed")
+    }
   }
 
   return (
-    <div className="c-form">
-      <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          <label htmlFor="username">Username:</label>
+    <div >
+      <form onSubmit={(e) => handleLogin(e)}>
+        <div className="login-form">
+          <label className="center" htmlFor="username">Username:</label>
           <input
+            className="m-5"
             type="text"
             id="username"
             name="username"
@@ -43,10 +44,9 @@ const Login = ({handleClose}) => {
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </div>
-        <div className="form-row">
-          <label htmlFor="pass">Password</label>
+          <label className="center" htmlFor="pass">Password</label>
           <input
+            className="m-5"
             type="password"
             id="pass"
             name="password"
@@ -56,10 +56,13 @@ const Login = ({handleClose}) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <input className="btn btn-info"
-          type="submit"
-          value="Sign in"
-        />
+        <div className="d-grid gap-2 mt-5">
+          <input className="btn btn-primary"
+            type="submit"
+            value="Sign in"
+            size="lg"
+          />
+        </div>
       </form>
     </div>
   )
