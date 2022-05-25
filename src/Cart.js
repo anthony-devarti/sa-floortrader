@@ -44,22 +44,26 @@ export default function Cart() {
     //buy should include each line item, the total suggested, the total paid, and the delta, the date now when the order was submitted, as well as the user (eventually)
 
     function submit() {
-        console.log("finalize the buy and continue the buying process")
+        console.log("suggested: ", suggestedTotal, "offer: ", offerTotal, "delta: ", delta)
         //how did I get this set up last time around?
         //I need to post to items and orders at the same time.
         const orderObject = {
             "total_paid": offerTotal,
-            "pub_date": Date.now(),
-            "suggested": suggestedTotal,
-            "delta": suggestedTotal=offerTotal,
-            "note": "None"
-        }
+             "pub_date": new Date(),
+             "suggested": suggestedTotal,
+             "delta": delta,
+             "seller": "Unknown",
+             "note": "None",
+             "buyer": 1,
+             "order_items": state.cart
+           }
+        console.log(orderObject)
         axios
             .post(
-                process.env.REACT_APP_BASE + "item/create_orders/",
+                "https://8000-anthonydevart-sabackend-7a6kfg8m22y.ws-us45.gitpod.io/strange/items/create_orders/",
                 orderObject
             )
-            //need to save response.data to a variable
+        //     //need to save response.data to a variable
             .then(function (response) {
                 console.log(response);
                 // setCurrentId(response.data);
