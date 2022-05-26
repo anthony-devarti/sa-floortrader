@@ -2,11 +2,11 @@ import { useGlobalState } from "../GlobalState";
 import { axiosGet } from "../data";
 import { Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { BuyIcon, CalendarIcon, ClockIcon, HistoryIcon, InventoryIcon, LogoutIcon, NewUserIcon, SettingsIcon } from "../Icons";
 
 export default function Profile() {
   const [state, dispatch] = useGlobalState();
   const userID = state.currentUser.user_id;
-  //I need to get the user info, but only for the user that's logged in.  This will require its own endpoint
   const userEndpoint = `/users/?id=${userID}`;
   const [userInfo, setUserInfo] = useState();
 
@@ -19,7 +19,7 @@ export default function Profile() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [state.currentUser]);
 
   console.log("User: ", userInfo);
 
@@ -27,6 +27,10 @@ export default function Profile() {
     localStorage.removeItem("user");
     dispatch((state.currentUser = null));
     dispatch({ view: 0 });
+  }
+
+  function navigate(destination) {
+    dispatch({view: destination})
   }
 
   return (
@@ -37,19 +41,63 @@ export default function Profile() {
         You are functioning in the {userInfo ? userInfo.groups[0].name : ""}{" "}
         role.
       </div>
-      <div className="sok-tile-row">
-        <div className="sok-tile">
-          $<div className="sok-tile-name">Buy</div>
-        </div>
-        <div className="sok-tile">
-          www<div className="sok-tile-name">History</div>
-        </div>
-        <div className="sok-tile">
-          3<div className="sok-tile-name">Settings</div>
-        </div>
-        <div className="sok-tile">
-          3<div className="sok-tile-name">Logout</div>
-        </div>
+      <div className="button-tray">
+      <button
+        className="tile-button"
+        style={{ backgroundColor: "green" }}
+        onClick={() => navigate(1)}
+      >
+        <BuyIcon />
+        Buy
+      </button>
+      <button
+        className="tile-button"
+        style={{ backgroundColor: "purple" }}
+        onClick={() => navigate(2)}
+      >
+        <HistoryIcon />
+        History
+      </button>
+      <button
+        className="tile-button"
+        style={{ backgroundColor: "blue" }}
+        onClick={() => navigate(3)}
+      >
+        <SettingsIcon />
+        Settings
+      </button>
+      <button
+        className="tile-button"
+        style={{ backgroundColor: "blue" }}
+      >
+        <NewUserIcon />
+        New Employee
+      </button>
+      <button
+        className="tile-button"
+        style={{ backgroundColor: "blue" }}
+      >
+        <ClockIcon />
+        Time Card
+      </button>
+      <button
+        className="tile-button"
+        style={{ backgroundColor: "blue" }}
+      >
+        <CalendarIcon />
+        Calendar
+      </button>
+      <button
+        className="tile-button"
+        style={{ backgroundColor: "blue" }}
+      >
+        <InventoryIcon />
+        Inventory
+      </button>
+      <button className="tile-button" onClick={logoutHandler}>
+        <LogoutIcon />
+        Logout
+      </button>
       </div>
     </>
   );

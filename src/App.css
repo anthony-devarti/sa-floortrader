@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Orbitron&display=swap');
+
+/* Font uses
+font-family: 'Libre Baskerville', serif;
+font-family: 'Orbitron', sans-serif; */
+
 .visualizer {
   display: flex;
   flex-direction: row;
@@ -91,14 +97,17 @@
 }
 
 .long-body {
+  height: 75vh;
   overflow-y: scroll;
 }
 
+
+/* I don't think this is working as expected for some reason */
 .condition-selection {
   display: flex;
   flex-direction: row;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 10px;
+  margin-bottom: 10px;;
 }
 
 .grade-img {
@@ -163,44 +172,44 @@
   justify-content: space-around;
 }
 
-/* Tile style buttons */
+.tile-button {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  background-color: red;
+  box-shadow: 5px 5px 0px black;
+  color: white;
+  transition-duration: 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
 
-.sok-tile-row {
-  font-family: Arial;
-  overflow: hidden;
-  background-color: #6e6e6e;
+.tile-button:hover {
+  transform: translateY(-5px) translateX(-5px);
+  box-shadow: 10px 10px 0px black;
+  transition: ease-in-out;
+  transition-duration: 0.5s;
+}
+
+.tile-button:active {
+  transform: translateY(10px) translateX(10px);
+  box-shadow: 0px 0px 0px black;
+  transition: ease-in-out;
+  transition-duration: 0.1s;
+}
+
+.button-tray {
+  width: 100vw;
+  height: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-}
-.sok-tile {
-  text-align: center;
-  display: inline-block;
-  font-size: 50px;
-  color: white;
-  background-color: #6e6e6e;
-  width: 150px;
-  height: 150px;
-  line-height: 150px;
-  overflow: hidden;
-  cursor: pointer;
-}
-.sok-tile-name {
-  text-align: left;
-  font-size: 13px;
-  line-height: 13px;
-  padding: 10px;
-  background-color: #000000;
-  height: 30px;
-  width: 130px;
-  position: relative;
-  top: -50px;
+  flex-wrap: wrap;
 }
 
-.sok-tile:hover .sok-tile-name {
-  height: 130px;
-  position: relative;
-  top: -150px;
-  -webkit-transition-duration: 0.5s; /* Safari */
-  transition-duration: 0.5s;
+.icons {
+  height: 100px;
+  width: auto;
+  fill: white;
 }
