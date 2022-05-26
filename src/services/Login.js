@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import AuthService from "./auth.service";
 import { useGlobalState } from "../GlobalState";
 import jwtDecode from "jwt-decode";
@@ -21,14 +21,15 @@ const Login = ({ handleClose }) => {
           currentUserToken: resp.access,
           currentUser: data
         })
+        dispatch({view:4})
       });
-      //this is trying to check to see if they are logged in and send them to a different view, but I don't think it's working as expected
-    if (state.user) {
-      dispatch({ view: 1 })
-    } else {
-      alert("You done goofed")
-    }
   }
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem('user'))
+    if (user) {
+      dispatch({ view: 4 })
+    }
+  }, [dispatch])
 
   return (
     <div >

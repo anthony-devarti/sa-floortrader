@@ -1,4 +1,9 @@
 import axios from "axios";
+import { API_URL } from "./services/auth.constants";
+
+//joining these two together.  Should go back later and replace all occurences of API URK with API ROOT
+export const API_ROOT = API_URL
+
 
 
 export async function printings(cardName) {
@@ -102,4 +107,3 @@ export async function axiosGet(endpoint) {
       .then((response) => response.data);
   }
 
-export const API_ROOT = "https://8000-anthonydevart-sabackend-7a6kfg8m22y.ws-us45.gitpod.io/strange"

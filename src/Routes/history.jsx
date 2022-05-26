@@ -7,24 +7,43 @@ import { compareAsc, format } from "date-fns";
 
 export default function History() {
   const [state, dispatch] = useGlobalState();
-  const [orders, setOrders] = useState([]);
+
+  //default loading state so I can include my fetch in a useEffect
+  const loading = {
+    buyer: "loading",
+    delta: "loading",
+    id: "loading",
+    item_set: [],
+    method: { id: 1, method: "Cash", multiplier: 1 },
+    note: "Loading",
+    pub_date: "Loading",
+    seller: "Loading",
+    suggested: "Loading",
+    total_paid: "Loading",
+  };
+
+  const [orders, setOrders] = useState([{...loading}]);
+
+  //the user is hard-coded now, but can be manipulated later
+  let user = state.currentUser.user_id;
+
+  async function fetchData() {
+    const response = await axiosGet(`/orders/?id=&buyer__id=${user}`);
+    setOrders(response.results);
+    localStorage.setItem("orders", JSON.stringify(response));
+    console.log({ response });
+  }
 
   useEffect(() => {
-    //the user is hard-coded now, but can be manipulated later
-    let user = 1
-    async function fetchData() {
-      const response = await axiosGet(`/orders/?id=&buyer__id=${user}`);
-      setOrders(response);
-      localStorage.setItem("orders", JSON.stringify(response));
-      console.log({ response });
-    }
     fetchData();
-    //dependency array is set to re-fetch when the cart changes
-  }, [state.cart]);
+  }, []);
 
   return (
     <>
       <h1>History</h1>
+      <Button variant="info" onClick={fetchData}>
+        Refresh
+      </Button>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ButtonGroup aria-label="Basic example">
           <Button variant="secondary">All</Button>

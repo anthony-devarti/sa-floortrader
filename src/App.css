@@ -35,7 +35,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .image-cell {
@@ -59,18 +59,18 @@
   overflow-x: scroll;
 }
 
-.selector{
+.selector {
   display: flex;
   flex-direction: column;
   margin: 1rem;
   justify-content: space-between;
 }
 
-.footer-row{
+.footer-row {
   background: rgba(0, 0, 0, 0.25);
 }
 
-.center{
+.center {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -79,7 +79,7 @@
   justify-items: center;
 }
 
-.card-flex{
+.card-flex {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -90,50 +90,50 @@
   margin: 1.5rem;
 }
 
-.long-body{
+.long-body {
   overflow-y: scroll;
 }
 
-.condition-selection{
+.condition-selection {
   display: flex;
   flex-direction: row;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.grade-img{
+.grade-img {
   width: -webkit-fill-available;
   padding-top: 1.5rem;
 }
 
-.dan-schneider{
+.dan-schneider {
   display: flex;
   flex: row;
   justify-content: space-around;
 }
 
-.circle-button{
+.circle-button {
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 
-.bulk-title{
+.bulk-title {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: .5rem;
-  margin-bottom: .5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   justify-content: center;
 }
 
-.gutters{
-  padding-left: .5rem;
-  padding-right: .5rem;
+.gutters {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
-.login-screen{
+.login-screen {
   height: 110vh;
   width: 100vw;
   background-color: black;
@@ -147,7 +147,60 @@
   top: -10px;
 }
 
-.login-form{
+.login-form {
   display: flex;
   flex-direction: row;
+}
+
+.big-buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
+  align-content: space-around;
+  justify-content: space-around;
+}
+
+/* Tile style buttons */
+
+.sok-tile-row {
+  font-family: Arial;
+  overflow: hidden;
+  background-color: #6e6e6e;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.sok-tile {
+  text-align: center;
+  display: inline-block;
+  font-size: 50px;
+  color: white;
+  background-color: #6e6e6e;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.sok-tile-name {
+  text-align: left;
+  font-size: 13px;
+  line-height: 13px;
+  padding: 10px;
+  background-color: #000000;
+  height: 30px;
+  width: 130px;
+  position: relative;
+  top: -50px;
+}
+
+.sok-tile:hover .sok-tile-name {
+  height: 130px;
+  position: relative;
+  top: -150px;
+  -webkit-transition-duration: 0.5s; /* Safari */
+  transition-duration: 0.5s;
 }
