@@ -1,3 +1,8 @@
+import axios from "axios";
+import { API_URL } from "./services/auth.constants";
+
+//joining these two together.  Should go back later and replace all occurences of API URK with API ROOT
+export const API_ROOT = API_URL
 
 
 
@@ -40,7 +45,7 @@ export function getPrintings(endpoint) {
 //for some reason, foil is evaluating to true and non foil or non
 export function offerPrice(price, foilPrice, foilStatus, condition, margin, bulk) {
     // margin is undefined when it's being passed in
-    console.log(arguments)
+    // console.log(arguments)
     let retail = price;
     if (foilStatus == 1) {
         retail = price
@@ -95,3 +100,10 @@ export function conditionTranslator(input) {
             return "N/A"
     }
 }
+
+export async function axiosGet(endpoint) {
+    return axios
+      .get(API_ROOT + endpoint)
+      .then((response) => response.data);
+  }
+

@@ -118,6 +118,7 @@ export default function Search() {
             <GradeGuide
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+                dialogClassName="modal-90w"
             />
         </>
     )

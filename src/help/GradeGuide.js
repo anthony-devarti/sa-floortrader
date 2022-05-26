@@ -17,7 +17,7 @@ export default function GradeGuide(props) {
                 <p>
                     The condition of a card is determined by the number and extent of imperfections that a card exhibits.  Imperfections are any atypical printing or manufacturing defects, and any wear or damage to the card after that printing process. Imperfections are characterized by both a Type (ex: scratch) and a Severity (ex: slight).
                 </p>
-                <div>
+                <div className="condition-section">
                     <h5>Near Mint</h5>
                     <Row className="condition-section">
                         <Col>

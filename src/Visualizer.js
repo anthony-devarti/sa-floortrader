@@ -107,7 +107,7 @@ export default function Visualizer(offer) {
     }
 
     function addBulk(e) {
-        console.log("id: ", e.target.id, "rare rate: ", state.margins.bulkRareRate, "cu rate: ", state.margins.bulkCURate)
+        // console.log("id: ", e.target.id, "rare rate: ", state.margins.bulkRareRate, "cu rate: ", state.margins.bulkCURate)
         let rarity = e.target.id
         let price = 0
         let title
@@ -118,7 +118,7 @@ export default function Visualizer(offer) {
             price = bulkCU * state.margins.bulkCURate
             title = "Bulk C/U"
         }
-        console.log(price)
+        // console.log(price)
         let lineItem = {
             name: title,
             Estimate: price,

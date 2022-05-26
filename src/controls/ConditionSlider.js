@@ -35,7 +35,7 @@ export default function ConditionSlider() {
             bulkRareRate: bulkRareRate,
             bulkCURate: bulkCURate
         }
-        console.log(newMargins)
+        // console.log(newMargins)
         dispatch({ margins: newMargins })
     }
 

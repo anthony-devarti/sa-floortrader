@@ -194,7 +194,8 @@ const initialState = {
   card: {...animar},
   foilStatus: 1,
   condition: 1,
-  margins : defaultMargins
+  margins : defaultMargins,
+  view: 0
 }
 
 
