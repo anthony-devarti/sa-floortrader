@@ -213,3 +213,10 @@ font-family: 'Orbitron', sans-serif; */
   width: auto;
   fill: white;
 }
+
+.icon-small {
+  height: 25px;
+  width: auto;
+  fill: black;
+}
+
