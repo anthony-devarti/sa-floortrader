@@ -1,9 +1,12 @@
 import { useState } from "react"
-import { Card, Button } from "react-bootstrap"
+import { Card, Button, Modal, Form, Row, Col } from "react-bootstrap"
 import "../CSS/calendar.css"
 import { NewCalIcon, EditIcon } from "../Icons"
+import EventScheduleModal from "./EventScheduleModal"
 
 export default function Events() {
+
+    ///////////manages event state and sets up with dummy data///////////////////////
     const dummy = [
         {
             name: "Modern Showcase",
@@ -34,8 +37,40 @@ export default function Events() {
     ]
 
     const [events, setEvents] = useState(dummy)
+    ////////////////////end///////////////////////////
 
-    //needs a get request to go get the events and set them to the events state
+    ////////////////// Event scheduluer Modal /////////////////////////
+    const [modalShow, setModalShow] = useState(false);
+
+    function createEvent(name, format, entry, prize, top8, cap, link) {
+        console.log("Create Event Called")
+        //this is going to need to get the expected id
+        //need to add the time formatter to the modal and to here
+        const newEvent = {
+            "name": name, 
+            "format":format, 
+            "entry": parseInt(entry), 
+            "prizeSupport": parseInt(prize), 
+            "top8": top8, 
+            "cap": parseInt(cap), 
+            "registrationLink": link
+        }
+        const newEvents = events.concat(newEvent)
+        setEvents(newEvents)
+        setModalShow(false)
+    }
+
+    function editEvent(id) {
+        console.log("Editing event ", id)
+    }
+
+    //I can probably adjust this for the edit function
+
+
+    ////////////// end ///////////////////////////////////
+
+    ///////////// Get Request for Event API Data /////////////////////
+
 
 
     return (
@@ -70,10 +105,18 @@ export default function Events() {
                 ))}
             </div>
             <div>
-                <button className="tile-button">
+                <button
+                    className="tile-button"
+                    onClick={() => setModalShow(true)}
+                >
                     <NewCalIcon />
                     Schedule Event
                 </button>
+                <EventScheduleModal
+                    create={createEvent}
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                />
             </div>
         </>
     )
