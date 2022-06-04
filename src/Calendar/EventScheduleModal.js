@@ -11,9 +11,10 @@ export default function EventScheduleModal(props) {
     const [cap, setCap] = useState();
     const [link, setLink] = useState();
     //Event Time needs to be set up
+    const [date, setDate] = useState();
     const [time, setTime] = useState();
 
-    function toggle(){
+    function toggle() {
         top8 ? setTop8(false) : setTop8(true)
     }
 
@@ -104,10 +105,30 @@ export default function EventScheduleModal(props) {
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
                 />
+                <Row>
+                    <Col md>
+                        <Form.Label>Select Date</Form.Label>
+                        <Form.Control
+                            type="date"
+                            name="eventDate"
+                            placeholder="Event Date"
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                    </Col>
+                    <Col md>
+                        <Form.Label>Select Time</Form.Label>
+                        <Form.Control
+                            type="time"
+                            name="eventTime"
+                            placeholder="Event Time"
+                            onChange={(e) => setTime(e.target.value)}
+                        />
+                    </Col>
+                </Row>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={props.onHide}>Close</Button>
-                <Button variant="primary" onClick={() => props.create(name, format, entry, prize, top8, cap, link)}>Create</Button>
+                <Button variant="primary" onClick={() => props.create(name, format, entry, prize, top8, cap, link, date, time)}>Create</Button>
             </Modal.Footer>
         </Modal>
     );

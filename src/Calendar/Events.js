@@ -36,40 +36,69 @@ export default function Events() {
         }
     ]
 
+    ///////// translator function.  I want to add this to the data file, but I'm having trouble with the import ///////
+    function formatTranslator(input) {
+        let parsed = parseInt(input)
+        switch (true) {
+            case parsed === 1:
+                return "Standard"
+            case parsed === 2:
+                return "Modern"
+            case parsed === 3:
+                return "Legacy"
+            case parsed === 4:
+                return "Commander"
+            case parsed === 5:
+                return "Pioneer"
+            case parsed === 6:
+                return "Pauper"
+            case parsed === 7:
+                return "Sealed"
+            case parsed === 8:
+                return "Draft"
+            default:
+                return "N/A"
+        }
+    }
+
     const [events, setEvents] = useState(dummy)
     ////////////////////end///////////////////////////
 
     ////////////////// Event scheduluer Modal /////////////////////////
     const [modalShow, setModalShow] = useState(false);
 
-    function createEvent(name, format, entry, prize, top8, cap, link) {
-        console.log("Create Event Called")
-        //this is going to need to get the expected id
+    function createEvent(name, format, entry, prize, top8, cap, link, date, time) {
         //need to add the time formatter to the modal and to here
         const newEvent = {
-            "name": name, 
-            "format":format, 
-            "entry": parseInt(entry), 
-            "prizeSupport": parseInt(prize), 
-            "top8": top8, 
-            "cap": parseInt(cap), 
-            "registrationLink": link
+            "name": name,
+            "format": formatTranslator(format),
+            "entry": parseInt(entry),
+            "prizeSupport": parseInt(prize),
+            "top8": top8,
+            "cap": parseInt(cap),
+            "registrationLink": link,
+            //this might need to be changed to be based on the results of the api call
+            "id": events.length + 1,
+            "time": time,
+            "date": date
         }
         const newEvents = events.concat(newEvent)
         setEvents(newEvents)
         setModalShow(false)
     }
 
+    //I can probably adjust this for the edit function
     function editEvent(id) {
         console.log("Editing event ", id)
     }
 
-    //I can probably adjust this for the edit function
 
 
     ////////////// end ///////////////////////////////////
 
     ///////////// Get Request for Event API Data /////////////////////
+
+    ///////////// Post Request for Event API Data /////////////////////
 
 
 
@@ -78,7 +107,7 @@ export default function Events() {
             <div className="events">
                 {events.map((event) => (
                     <Card key={event.id} border="dark" className="event-card">
-                        <Card.Header className="card-header">{event.name}|{event.format}|
+                        <Card.Header className="card-header">{event.name} | {event.format}  |
                             <Button
                                 variant="light"
                                 size="sm"

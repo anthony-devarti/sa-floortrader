@@ -69,21 +69,21 @@ export default function Profile() {
       {/* This should link to the django admin page for user creation. */}
       <button
         className="tile-button"
-        style={{ backgroundColor: "blue" }}
+        style={{ backgroundColor: "#ffbe0b" }}
       >
         <NewUserIcon />
         New Employee
       </button>
       <button
         className="tile-button"
-        style={{ backgroundColor: "blue" }}
+        style={{ backgroundColor: "#ff006e" }}
       >
         <ClockIcon />
         Time Card
       </button>
       <button
         className="tile-button"
-        style={{ backgroundColor: "blue" }}
+        style={{ backgroundColor: "#fb5607" }}
         onClick={() => navigate(5)}
       >
         <CalendarIcon />
@@ -91,7 +91,7 @@ export default function Profile() {
       </button>
       <button
         className="tile-button"
-        style={{ backgroundColor: "blue" }}
+        style={{ backgroundColor: "#3a86ff" }}
       >
         <InventoryIcon />
         Inventory

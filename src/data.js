@@ -107,3 +107,19 @@ export async function axiosGet(endpoint) {
       .then((response) => response.data);
   }
 
+export function formatTranslator(input){
+    switch (true) {
+        case input === 1:
+            return "Standard"
+        case input === 2:
+            return "Modern"
+        case input === 3:
+            return "Legacy"
+        case input === 4:
+            return "Commander"
+        case input === 5:
+            return "Pioneer"
+        default:
+            return "N/A"
+    }
+}
