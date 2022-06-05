@@ -80,6 +80,7 @@ export default function Events() {
             //this might need to be changed to be based on the results of the api call
             "id": events.length + 1,
             "time": time,
+            //date is not working as expected
             "date": date
         }
         const newEvents = events.concat(newEvent)

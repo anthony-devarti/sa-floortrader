@@ -24,6 +24,7 @@ export default function History() {
 
   const [orders, setOrders] = useState([{...loading}]);
 
+
   //the user is hard-coded now, but can be manipulated later
   let user = state.currentUser.user_id;
 
@@ -34,16 +35,30 @@ export default function History() {
     console.log({ response });
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const findAverage = (arr) => {
+    const { length } = arr;
+    return arr.reduce((acc, val) => {
+       return acc + (val.delta/length);
+    }, 0);
+ };
+
+ const findSum = (arr) => {
+   const { length } = arr;
+   return arr.reduce((acc, val) => {
+     return acc + val.delta;
+    }, 0);
+  }
+
+ const average = (Math.round((findAverage(orders)/findSum(orders))*10000))/100;
+
 
   return (
     <>
       <h1>History</h1>
       <Button variant="info" onClick={fetchData}>
-        Refresh
+        Get Order History
       </Button>
+      Average Delta: {average}%
       <div style={{ display: "flex", flexDirection: "column" }}>
         <ButtonGroup aria-label="Basic example">
           <Button variant="secondary">All</Button>

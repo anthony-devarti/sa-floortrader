@@ -20,6 +20,7 @@ function App() {
             <Nav.Link onClick={() => dispatch({view:3})}>Settings</Nav.Link>
             <Nav.Link onClick={() => dispatch({view:4})}>Profile</Nav.Link>
             <Nav.Link onClick={() => dispatch({view:5})}>Calendar</Nav.Link>
+            <Nav.Link onClick={() => dispatch({view:6})}>Time Card</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

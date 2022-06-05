@@ -1,4 +1,4 @@
-import { Button, Table } from "react-bootstrap"
+import { Button, Table, FloatingLabel, Form, Row, Col } from "react-bootstrap"
 import { useGlobalState } from "./GlobalState";
 import { conditionTranslator } from "./data";
 import axios from "axios";
@@ -49,6 +49,7 @@ export default function Cart() {
 
     const [orderDetails, setOrderDetails] = useState({})
     const [orderId, setOrderId] = useState()
+    const [customerName, setCustomerName] = useState("Unknown")
 
     function submit() {
         // console.log("suggested: ", suggestedTotal, "offer: ", offerTotal, "delta: ", delta)
@@ -59,7 +60,7 @@ export default function Cart() {
             "pub_date": new Date(),
             "suggested": suggestedTotal,
             "delta": delta,
-            "seller": "Unknown",
+            "seller": customerName,
             "note": "None",
             "buyer": 1,
             "order_items": state.cart
@@ -87,7 +88,25 @@ export default function Cart() {
 
     return (
         <>
-            <h1>Current Offer</h1>
+            <Row>
+                <Col md>
+                <h1>Current Offer</h1>
+                </Col>
+                <Col md>
+                <FloatingLabel
+                    controlId="floatingInput"
+                    label="Seller Name"
+                    className="m-3"
+                >
+                    <Form.Control
+                        value={customerName}
+                        type="name"
+                        placeholder="Customer Name"
+                        onChange={(e) => setCustomerName(e.target.value)}
+                    />
+                </FloatingLabel>
+                </Col>
+            </Row>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -137,7 +156,7 @@ export default function Cart() {
                 id={orderId}
                 show={confirmationModalShow}
                 onHide={() => setConfirmationModalShow(false)}
-                
+
             />
         </>
     )

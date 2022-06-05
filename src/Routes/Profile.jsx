@@ -77,6 +77,7 @@ export default function Profile() {
       <button
         className="tile-button"
         style={{ backgroundColor: "#ff006e" }}
+        onClick={() => navigate(6)}
       >
         <ClockIcon />
         Time Card

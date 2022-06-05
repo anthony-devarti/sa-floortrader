@@ -123,3 +123,15 @@ export function formatTranslator(input){
             return "N/A"
     }
 }
+
+export function axiosPost(endpoint, data) {
+    return axios
+      .post(API_ROOT + endpoint, data)
+      .then((response) => response.data);
+  }
+
+export function axiosGetPunchesByUser(user) {
+    return axios
+      .get(API_ROOT + `/punches/?id=&user__id=${user}`)
+      .then((response) => response.data);
+  }
