@@ -6,6 +6,7 @@ import LoginScreen from "./services/LoginScreen"
 import { useGlobalState } from "./GlobalState"
 import Calendar from "./Routes/calendar"
 import TimeCard from "./Routes/timeCard"
+import Customer from "./Routes/customer"
 
 export default function Body(view){
     const [state, disptach] = useGlobalState()
@@ -39,6 +40,10 @@ export default function Body(view){
     } else if (current === 6){
         return(
             <TimeCard />
+        )
+    } else if (current === 7){
+        return(
+            <Customer />
         )
     }
 }

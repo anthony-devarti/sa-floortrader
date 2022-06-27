@@ -3,6 +3,7 @@ import { Card, Button, Modal, Form, Row, Col } from "react-bootstrap"
 import "../CSS/calendar.css"
 import { NewCalIcon, EditIcon } from "../Icons"
 import EventScheduleModal from "./EventScheduleModal"
+import EventCard from "./EventCard"
 
 export default function Events() {
 
@@ -133,6 +134,7 @@ export default function Events() {
                         </Card.Body>
                     </Card>
                 ))}
+                <EventCard />
             </div>
             <div>
                 <button

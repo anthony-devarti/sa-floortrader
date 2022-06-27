@@ -101,7 +101,6 @@ export default function Cart() {
                     <Form.Control
                         value={customerName}
                         type="name"
-                        placeholder="Customer Name"
                         onChange={(e) => setCustomerName(e.target.value)}
                     />
                 </FloatingLabel>
