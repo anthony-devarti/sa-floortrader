@@ -125,8 +125,8 @@ export default function Events() {
                                 <span>Cap: {event.cap}</span>
                             </div>
                             <div className="event-clickthrough">
-                            <a href="#">Edit</a>
-                            <a href="#">More</a>
+                            <Button variant="light" onClick={() => editEvent(event.id)}>Edit</Button>
+                            <Button variant="light" >More</Button>
                             </div>
                         </div>
                     </div>
