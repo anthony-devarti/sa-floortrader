@@ -3,7 +3,7 @@ import { Card, Button, Modal, Form, Row, Col } from "react-bootstrap"
 import "../CSS/calendar.css"
 import { NewCalIcon, EditIcon } from "../Icons"
 import EventScheduleModal from "./EventScheduleModal"
-import EventCard from "./EventCard"
+import './EventCard.css'
 
 export default function Events() {
 
@@ -108,33 +108,31 @@ export default function Events() {
         <>
             <div className="events">
                 {events.map((event) => (
-                    <Card key={event.id} border="dark" className="event-card">
-                        <Card.Header className="card-header">{event.name} | {event.format}  |
-                            <Button
-                                variant="light"
-                                size="sm"
-                            >
-                                <EditIcon />
-                            </Button>
-                        </Card.Header>
-                        <Card.Body className="scroll-body">
-                            <div >
-                                <ul>
-                                    <li>Max Prize Support: ${event.prizeSupport}</li>
-                                    <li>Entry Fee: ${event.entry}</li>
-                                    <li>Attendance Cap: {event.cap}</li>
-                                    <li>Start Time: {event.time}</li>
-                                    <li>Signup Link: {event.registrationLink}</li>
-                                    <li>Location: {event.location}</li>
-                                    <li>Qualifies for: {event.qualification}</li>
-                                    <li>T8 Cut: {event.top8 ? "Yes" : "No"}</li>
-                                    <li>Event ID: {event.id}</li>
-                                </ul>
+                    <div className="container">
+                    <div className={`card ${event.format.toLowerCase()}`}>
+                        <div className="contentBx">
+                            <h2>{event.name}</h2>
+                            <div className={"size"}>
+                                <span>Date: {event.time}</span>
+                                <span>Prize: ${event.prizeSupport}</span>
                             </div>
-                        </Card.Body>
-                    </Card>
+                            <div className="size">
+                                <span>Format: {event.format}</span>
+                                <span>Entry: ${event.entry}</span>
+                            </div>
+                            <div className="size">
+                                <span>Time: {event.time}</span>
+                                <span>Cap: {event.cap}</span>
+                            </div>
+                            <div className="event-clickthrough">
+                            <a href="#">Edit</a>
+                            <a href="#">More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 ))}
-                <EventCard />
+                {/* <EventCard /> */}
             </div>
             <div>
                 <button
