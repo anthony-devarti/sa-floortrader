@@ -7,6 +7,7 @@ import { useGlobalState } from "./GlobalState"
 import Calendar from "./Routes/calendar"
 import TimeCard from "./Routes/timeCard"
 import Customer from "./Routes/customer"
+import Inventory from "./Routes/inventory"
 
 export default function Body(view){
     const [state, disptach] = useGlobalState()
@@ -44,6 +45,10 @@ export default function Body(view){
     } else if (current === 7){
         return(
             <Customer />
+        )
+    } else if (current === 8){
+        return(
+            <Inventory />
         )
     }
 }

@@ -46,6 +46,7 @@ export default function Search() {
     };
 
     //determines what card is being searched
+    // https://scryfall.com/docs/api/cards/autocomplete
     const [searchValue, setSearchValue] = useState("animar soul of elements")
 
 

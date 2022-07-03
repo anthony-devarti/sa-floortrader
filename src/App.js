@@ -22,6 +22,7 @@ function App() {
             <Nav.Link onClick={() => dispatch({view:5})}>Calendar</Nav.Link>
             <Nav.Link onClick={() => dispatch({view:6})}>Time Card</Nav.Link>
             <Nav.Link onClick={() => dispatch({view:7})}>Customer</Nav.Link>
+            <Nav.Link onClick={() => dispatch({view:8})}>Inventory</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
