@@ -102,35 +102,188 @@ export default function Events() {
 
     ///////////// Post Request for Event API Data /////////////////////
 
+    ////filter events/////////
+    const [standard, setStandard] = useState(true)
+    const [modern, setModern] = useState(true)
+    const [legacy, setLegacy] = useState(true)
+    const [commander, setCommander] = useState(true)
+    const [pioneer, setPioneer] = useState(true)
+    const [pauper, setPauper] = useState(true)
+    const [sealed, setSealed] = useState(true)
+    const [draft, setDraft] = useState(true)
+    const [upcoming, setUpcoming] = useState(true)
+
+    const standardEvents = events.filter(event => event.format === "Standard")
+    const modernEvents = events.filter(event => event.format === "Modern")
+    const legacyEvents = events.filter(event => event.format === "Legacy")
+    const commanderEvents = events.filter(event => event.format === "Commander")
+    const pioneerEvents = events.filter(event => event.format === "Pioneer")
+    const pauperEvents = events.filter(event => event.format === "Pauper")
+    const sealedEvents = events.filter(event => event.format === "Sealed")
+    const draftEvents = events.filter(event => event.format === "Draft")
+
+    const filteredEvents = []
+    if (standard) {
+        filteredEvents.push(...standardEvents)
+    }
+    if (modern) {
+        filteredEvents.push(...modernEvents)
+    }
+    if (legacy) {
+        filteredEvents.push(...legacyEvents)
+    }
+    if (commander) {
+        filteredEvents.push(...commanderEvents)
+    }
+    if (pioneer) {
+        filteredEvents.push(...pioneerEvents)
+    }
+    if (pauper) {
+        filteredEvents.push(...pauperEvents)
+    }
+    if (sealed) {
+        filteredEvents.push(...sealedEvents)
+    }
+    if (draft) {
+        filteredEvents.push(...draftEvents)
+    }
+    if (upcoming) {
+        filteredEvents.filter(event => event.date > new Date())
+    }
+
+    function checkHandler(format) {
+        switch (format) {
+            case "Standard":
+                setStandard(!standard)
+                break;
+            case "Modern":
+                setModern(!modern)
+                break;
+            case "Legacy":
+                setLegacy(!legacy)
+                break;
+            case "Commander":
+                setCommander(!commander)
+                break;
+            case "Pioneer":
+                setPioneer(!pioneer)
+                break;
+            case "Pauper":
+                setPauper(!pauper)
+                break;
+            case "Sealed":
+                setSealed(!sealed)
+                break;
+            case "Draft":
+                setDraft(!draft)
+                break;
+            default:
+                break;
+        }
+    }
+
+    //a box for format filters
+    function FormatFilters() {
+        return (
+            <div className="filter-group">
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Row>
+                        <h3>Format Filters</h3>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={standard}
+                                onChange={() => checkHandler("Standard")}
+                                label="Standard" />
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={modern}
+                                onChange={() => checkHandler("Standard")}
+                                label="Modern" />
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={legacy}
+                                onChange={() => checkHandler("Legacy")}
+                                label="Legacy" />
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={commander}
+                                onChange={() => checkHandler("Commander")}
+                                label="Commander" />
+                        </Col>
+                        <Col>
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={pioneer}
+                                onChange={() => checkHandler("Pioneer")}
+                                label="Pioneer" />
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={pauper}
+                                onChange={() => checkHandler("Pauper")}
+                                label="Pauper" />
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={sealed}
+                                onChange={() => checkHandler("Sealed")}
+                                label="Sealed" />
+                            <Form.Check
+                                type="checkbox"
+                                defaultChecked={draft}
+                                onChange={() => checkHandler("Draft")}
+                                label="Draft" />
+                        </Col>
+                    </Row>
+                </Form.Group>
+            </div>
+        )
+    }
 
 
     return (
         <>
+            <div className="filters">
+                <FormatFilters />
+                <div className="filter-group">
+                    <label class="form-switch">
+                        <Row><h3>Show Past Events</h3></Row>
+                        <input
+                            type="checkbox"
+                            label="Show Past Events"
+                            onChange={() => setUpcoming(!upcoming)}
+                        />
+                        <i></i>
+                        <Row></Row>
+                    </label>
+                </div>
+            </div>
             <div className="events">
-                {events.map((event) => (
+                {filteredEvents.map((event) => (
                     <div className="container">
-                    <div className={`card ${event.format.toLowerCase()}`}>
-                        <div className="contentBx">
-                            <h2>{event.name}</h2>
-                            <div className={"size"}>
-                                <span>Date: {event.time}</span>
-                                <span>Prize: ${event.prizeSupport}</span>
-                            </div>
-                            <div className="size">
-                                <span>Format: {event.format}</span>
-                                <span>Entry: ${event.entry}</span>
-                            </div>
-                            <div className="size">
-                                <span>Time: {event.time}</span>
-                                <span>Cap: {event.cap}</span>
-                            </div>
-                            <div className="event-clickthrough">
-                            <Button variant="light" onClick={() => editEvent(event.id)}>Edit</Button>
-                            <Button variant="light" >More</Button>
+                        <div className={`card ${event.format.toLowerCase()}`}>
+                            <div className="contentBx">
+                                <h2>{event.name}</h2>
+                                <div className={"size"}>
+                                    <span>Date: {event.time}</span>
+                                    <span>Prize: ${event.prizeSupport}</span>
+                                </div>
+                                <div className="size">
+                                    <span>Format: {event.format}</span>
+                                    <span>Entry: ${event.entry}</span>
+                                </div>
+                                <div className="size">
+                                    <span>Time: {event.time}</span>
+                                    <span>Cap: {event.cap}</span>
+                                </div>
+                                <div className="event-clickthrough">
+                                    <Button variant="light" onClick={() => editEvent(event.id)}>Edit</Button>
+                                    <Button variant="light" >More</Button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 ))}
                 {/* <EventCard /> */}
             </div>

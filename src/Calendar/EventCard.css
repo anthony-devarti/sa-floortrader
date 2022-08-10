@@ -13,6 +13,9 @@
 
 .container{
   position: relative;
+  margin: 20px;
+  max-width: 320px
+  ;
 }
 
 .container .card{
@@ -260,4 +263,19 @@
   margin-top: 3rem;
   margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.filter-group{
+  width: 25vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1rem;
+  border: 1px solid #111;
+  border-radius: 10%;
+}
+
+.filters{
+  display: flex;
+  flex-direction: row;
 }
