@@ -4,6 +4,10 @@ import Settings from "./Routes/settings"
 import Profile from "./Routes/Profile"
 import LoginScreen from "./services/LoginScreen"
 import { useGlobalState } from "./GlobalState"
+import Calendar from "./Routes/calendar"
+import TimeCard from "./Routes/timeCard"
+import Customer from "./Routes/customer"
+import Inventory from "./Routes/inventory"
 
 export default function Body(view){
     const [state, disptach] = useGlobalState()
@@ -29,6 +33,22 @@ export default function Body(view){
     } else if(current === 4){
         return(
             <Profile />
+        )
+    } else if(current === 5){
+        return(
+            <Calendar />
+        )
+    } else if (current === 6){
+        return(
+            <TimeCard />
+        )
+    } else if (current === 7){
+        return(
+            <Customer />
+        )
+    } else if (current === 8){
+        return(
+            <Inventory />
         )
     }
 }

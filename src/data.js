@@ -42,7 +42,6 @@ export function getPrintings(endpoint) {
         });
 }
 
-//for some reason, foil is evaluating to true and non foil or non
 export function offerPrice(price, foilPrice, foilStatus, condition, margin, bulk) {
     // margin is undefined when it's being passed in
     // console.log(arguments)
@@ -107,3 +106,41 @@ export async function axiosGet(endpoint) {
       .then((response) => response.data);
   }
 
+export function formatTranslator(input){
+    switch (true) {
+        case input === 1:
+            return "Standard"
+        case input === 2:
+            return "Modern"
+        case input === 3:
+            return "Legacy"
+        case input === 4:
+            return "Commander"
+        case input === 5:
+            return "Pioneer"
+        default:
+            return "N/A"
+    }
+}
+
+export function axiosPost(endpoint, data) {
+    return axios
+      .post(API_ROOT + endpoint, data)
+      .then((response) => response.data);
+  }
+
+export async function addOutTime(id) {
+    const response = await axios
+        .put(API_ROOT + `/punches/${id}/`, {
+            "out_time": new Date().toISOString(),
+        });
+    return response.data;
+  }
+
+export async function getInventory() {
+    const response = await axios
+        .get(API_ROOT + `/items/`);
+    return await response.data;
+  }
+
+export const stateNames = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']

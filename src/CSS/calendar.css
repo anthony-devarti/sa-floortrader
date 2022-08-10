@@ -1,0 +1,16 @@
+.card {
+    max-width: 40vw;
+    max-height: 40vw;
+    margin: 2rem;
+}
+
+.scroll-body{
+    height: auto;
+    overflow-y: scroll;
+}
+
+.events {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
